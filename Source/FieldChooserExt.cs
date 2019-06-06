@@ -96,9 +96,10 @@ namespace FieldChooser
         /// URL of a version information file. See
         /// https://keepass.info/help/v2_dev/plg_index.html#upd
         /// 
-        /// This is the first released version, no need to override.
+        /// Although this is the first released version and no updates will be
+        /// available this is required so KeePass can indicate that this plug in 
+        /// is up to date. See main menu Help -> Check For Updates
         /// </summary>
-#if false
         public override string UpdateUrl
         {
             get
@@ -106,7 +107,7 @@ namespace FieldChooser
                 return "https://raw.githubusercontent.com/DHancock/FieldChooser/master/FieldChooser.version";
             }
         }
-#endif
+
 
 
         /// <summary>
