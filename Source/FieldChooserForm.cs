@@ -87,6 +87,7 @@ namespace FieldChooser
             standardFields.AddRange(userFields);
 
             fieldComboBox.DataSource = standardFields;
+            fieldComboBox.DropDownWidth = CalculateDropDownWidth(fieldComboBox);
         }
 
 
@@ -243,6 +244,24 @@ namespace FieldChooser
             tb.Enabled = !string.IsNullOrEmpty(tb.Text);
         }
 
+
+        private int CalculateDropDownWidth(ComboBox comboBox)
+        {
+            Debug.Assert(comboBox != null);
+
+            int width = comboBox.Width;
+
+            foreach (object obj in comboBox.Items)
+            {
+                string text = comboBox.GetItemText(obj);
+                int itemWidth = TextRenderer.MeasureText(text, comboBox.Font).Width;
+
+                if (itemWidth > width)
+                    width = itemWidth;
+            }
+
+            return width;
+        }
 
 
         private sealed class CharacterSelectorRow
