@@ -12,7 +12,7 @@ using KeePassLib.Collections;
 using KeePassLib.Security;
 using KeePass.App;
 using KeePassLib.Utility;
-
+using System.Globalization;
 
 namespace FieldChooser
 {
@@ -20,7 +20,7 @@ namespace FieldChooser
     {
         private IPluginHost Host { get; set; }
         private ProtectedStringDictionary Fields { get; set; }
-        private List<CharacterSelectorRow> characterSelectorRows = new List<CharacterSelectorRow>();
+        private readonly List<CharacterSelectorRow> characterSelectorRows = new List<CharacterSelectorRow>();
         private int previousFieldIndex = int.MinValue;
 
 
@@ -111,7 +111,7 @@ namespace FieldChooser
                     {
                         for (int index = indexComboBox1.Items.Count; index < requiredComboBoxItemCount; index++)
                         {
-                            string value = index.ToString();
+                            string value = index.ToString(CultureInfo.CurrentCulture);
 
                             foreach (CharacterSelectorRow row in characterSelectorRows)
                                 row.IndexComboBox.Items.Add(value);
@@ -181,7 +181,7 @@ namespace FieldChooser
             {
                 char[] chars = pString.ReadChars();
 
-                textBox.Text = chars[selectedIndex - 1].ToString();
+                textBox.Text = chars[selectedIndex - 1].ToString(CultureInfo.CurrentCulture);
 
                 if (pString.IsProtected)
                     MemUtil.ZeroArray(chars);
@@ -306,10 +306,12 @@ namespace FieldChooser
 
             int IComparable.CompareTo(object obj)
             {
+#pragma warning disable IDE0019 // Use pattern matching (C# language version 5 doesn't support patterns)
                 FieldEntry entry = obj as FieldEntry;
+#pragma warning restore IDE0019 // Use pattern matching
 
                 if (entry == null)
-                    throw new ArgumentException();
+                    throw new ArgumentException(Properties.Resources.compare_exception);
 
                 return CompareTo(entry);
             }
@@ -320,7 +322,7 @@ namespace FieldChooser
                 if (other == null)
                     return -1;
 
-                return Name.CompareTo(other.Name);
+                return string.Compare(Name, other.Name, StringComparison.CurrentCulture);
             }
         }
     }

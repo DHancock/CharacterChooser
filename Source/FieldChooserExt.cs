@@ -12,11 +12,10 @@ using KeePassLib;
 namespace FieldChooser
 {
 
-    [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable")]
     public sealed class FieldChooserExt : Plugin
     {
         private IPluginHost m_Host;
-        private List<ToolStripMenuItem> m_MenuItems = new List<ToolStripMenuItem>();
+        private readonly List<ToolStripMenuItem> m_MenuItems = new List<ToolStripMenuItem>();
 
         /// <summary>
         /// The <c>Initialize</c> method is called by KeePass when
@@ -66,10 +65,11 @@ namespace FieldChooser
             // In KeePass 2.41 this is called once and the single menu item added to an
             // entry's context menu. In KeePass 2.42.1 it is called twice, the menus are
             // added to the context menu and the new Entry drop down menu on the main window.
-            ToolStripMenuItem menuItem = new ToolStripMenuItem();
-
-            menuItem.Text = Properties.Resources.menu_text;
-            menuItem.Image = Properties.Resources.Menu_16x;
+            ToolStripMenuItem menuItem = new ToolStripMenuItem
+            {
+                Text = Properties.Resources.menu_text,
+                Image = Properties.Resources.Menu_16x
+            };
 
             menuItem.Click += delegate (object sender, EventArgs e)
             {
