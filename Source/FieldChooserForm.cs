@@ -1,6 +1,25 @@
-﻿using System;
+﻿/*
+Copyright 2019 David Hancock
+
+This file is part of the FieldChooser plugin for KeePass 2.
+
+FieldChooser is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 2 of the License, or
+(at your option) any later version. 
+
+FieldChooser is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with FieldChooser.  If not, see<https://www.gnu.org/licenses/>.
+*/
+
+using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
+using System.Windows.Forms; 
 using System.Diagnostics;
 using System.Security.Permissions;
 
@@ -87,7 +106,7 @@ namespace FieldChooser
             standardFields.AddRange(userFields);
 
             fieldComboBox.DataSource = standardFields;
-            fieldComboBox.DropDownWidth = CalculateDropDownWidth(fieldComboBox);
+            fieldComboBox.DropDownWidth = Utils.CalculateDropDownWidth(fieldComboBox);
         }
 
 
@@ -245,23 +264,6 @@ namespace FieldChooser
         }
 
 
-        private int CalculateDropDownWidth(ComboBox comboBox)
-        {
-            Debug.Assert(comboBox != null);
-
-            int width = comboBox.Width;
-
-            foreach (object obj in comboBox.Items)
-            {
-                string text = comboBox.GetItemText(obj);
-                int itemWidth = TextRenderer.MeasureText(text, comboBox.Font).Width;
-
-                if (itemWidth > width)
-                    width = itemWidth;
-            }
-
-            return width;
-        }
 
 
         private sealed class CharacterSelectorRow
@@ -323,6 +325,27 @@ namespace FieldChooser
                     return -1;
 
                 return string.Compare(Name, other.Name, StringComparison.CurrentCulture);
+            }
+        }
+
+        private static class Utils
+        {
+            public static int CalculateDropDownWidth(ComboBox comboBox)
+            {
+                Debug.Assert(comboBox != null);
+
+                int width = comboBox.Width;
+
+                foreach (object obj in comboBox.Items)
+                {
+                    string text = comboBox.GetItemText(obj);
+                    int itemWidth = TextRenderer.MeasureText(text, comboBox.Font).Width;
+
+                    if (itemWidth > width)
+                        width = itemWidth;
+                }
+
+                return width;
             }
         }
     }
