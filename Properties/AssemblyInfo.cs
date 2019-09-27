@@ -9,9 +9,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("FieldChooser")]
 [assembly: AssemblyDescription("A plug in that allows you to choose individual characters from a field.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("david@davidhancock.net")]
+[assembly: AssemblyCompany("David Hancock")]
 [assembly: AssemblyProduct("KeePass Plugin")]
-[assembly: AssemblyCopyright("")]
+[assembly: AssemblyCopyright("Copyright 2019 David Hancock")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -33,7 +33,7 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.1")]
+[assembly: AssemblyFileVersion("1.1")]
 [assembly: NeutralResourcesLanguage("en")]
 
