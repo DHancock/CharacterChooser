@@ -113,16 +113,17 @@ namespace FieldChooser
         /// <summary>
         /// URL of a version information file. See
         /// https://keepass.info/help/v2_dev/plg_index.html#upd
-        /// 
-        /// Although this is the first released version and no updates will be
-        /// available this is required so KeePass can indicate that this plug in 
-        /// is up to date. See main menu Help -> Check For Updates
         /// </summary>
         public override string UpdateUrl
         {
             get
             {
+#if DEBUG
+                string dir = System.IO.Path.GetDirectoryName(typeof(FieldChooserExt).Assembly.Location);
+                return System.IO.Path.Combine(dir, "FieldChooser.version");
+#else
                 return "https://raw.githubusercontent.com/DHancock/FieldChooser/master/FieldChooser.version";
+#endif
             }
         }
 
