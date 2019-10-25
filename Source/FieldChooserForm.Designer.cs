@@ -93,7 +93,7 @@
             this.indexComboBox3.FormattingEnabled = true;
             this.indexComboBox3.Items.AddRange(new object[] {
             "-"});
-            this.indexComboBox3.Location = new System.Drawing.Point(183, 142);
+            this.indexComboBox3.Location = new System.Drawing.Point(183, 143);
             this.indexComboBox3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.indexComboBox3.Name = "indexComboBox3";
             this.indexComboBox3.Size = new System.Drawing.Size(48, 24);
@@ -106,7 +106,7 @@
             this.indexComboBox4.FormattingEnabled = true;
             this.indexComboBox4.Items.AddRange(new object[] {
             "-"});
-            this.indexComboBox4.Location = new System.Drawing.Point(183, 173);
+            this.indexComboBox4.Location = new System.Drawing.Point(183, 174);
             this.indexComboBox4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.indexComboBox4.Name = "indexComboBox4";
             this.indexComboBox4.Size = new System.Drawing.Size(48, 24);
@@ -117,7 +117,7 @@
             // 
             this.charTextBox1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.charTextBox1.Enabled = false;
-            this.charTextBox1.Location = new System.Drawing.Point(264, 82);
+            this.charTextBox1.Location = new System.Drawing.Point(264, 81);
             this.charTextBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.charTextBox1.Name = "charTextBox1";
             this.charTextBox1.ReadOnly = true;
@@ -143,7 +143,7 @@
             // 
             this.charTextBox3.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.charTextBox3.Enabled = false;
-            this.charTextBox3.Location = new System.Drawing.Point(264, 142);
+            this.charTextBox3.Location = new System.Drawing.Point(264, 143);
             this.charTextBox3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.charTextBox3.Name = "charTextBox3";
             this.charTextBox3.ReadOnly = true;
@@ -156,7 +156,7 @@
             // 
             this.charTextBox4.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.charTextBox4.Enabled = false;
-            this.charTextBox4.Location = new System.Drawing.Point(264, 172);
+            this.charTextBox4.Location = new System.Drawing.Point(264, 174);
             this.charTextBox4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.charTextBox4.Name = "charTextBox4";
             this.charTextBox4.ReadOnly = true;
@@ -187,7 +187,7 @@
             // 
             this.protectButton.Enabled = false;
             this.protectButton.Image = global::FieldChooser.Properties.Resources.Dots;
-            this.protectButton.Location = new System.Drawing.Point(312, 81);
+            this.protectButton.Location = new System.Drawing.Point(312, 80);
             this.protectButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.protectButton.Name = "protectButton";
             this.protectButton.Size = new System.Drawing.Size(35, 25);
