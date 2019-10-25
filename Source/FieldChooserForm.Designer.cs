@@ -50,7 +50,7 @@
             this.fieldComboBox.Location = new System.Drawing.Point(59, 27);
             this.fieldComboBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.fieldComboBox.Name = "fieldComboBox";
-            this.fieldComboBox.Size = new System.Drawing.Size(232, 24);
+            this.fieldComboBox.Size = new System.Drawing.Size(238, 24);
             this.fieldComboBox.TabIndex = 1;
             this.fieldComboBox.SelectedIndexChanged += new System.EventHandler(this.FieldComboBox_SelectedIndexChanged);
             // 
@@ -68,10 +68,10 @@
             this.indexComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.indexComboBox1.Items.AddRange(new object[] {
             "-"});
-            this.indexComboBox1.Location = new System.Drawing.Point(182, 81);
+            this.indexComboBox1.Location = new System.Drawing.Point(183, 81);
             this.indexComboBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.indexComboBox1.Name = "indexComboBox1";
-            this.indexComboBox1.Size = new System.Drawing.Size(43, 24);
+            this.indexComboBox1.Size = new System.Drawing.Size(48, 24);
             this.indexComboBox1.TabIndex = 4;
             this.indexComboBox1.SelectedIndexChanged += new System.EventHandler(this.IndexComboBox_SelectedIndexChanged);
             // 
@@ -80,10 +80,10 @@
             this.indexComboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.indexComboBox2.Items.AddRange(new object[] {
             "-"});
-            this.indexComboBox2.Location = new System.Drawing.Point(182, 112);
+            this.indexComboBox2.Location = new System.Drawing.Point(183, 112);
             this.indexComboBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.indexComboBox2.Name = "indexComboBox2";
-            this.indexComboBox2.Size = new System.Drawing.Size(43, 24);
+            this.indexComboBox2.Size = new System.Drawing.Size(48, 24);
             this.indexComboBox2.TabIndex = 8;
             this.indexComboBox2.SelectedIndexChanged += new System.EventHandler(this.IndexComboBox_SelectedIndexChanged);
             // 
@@ -93,10 +93,10 @@
             this.indexComboBox3.FormattingEnabled = true;
             this.indexComboBox3.Items.AddRange(new object[] {
             "-"});
-            this.indexComboBox3.Location = new System.Drawing.Point(182, 142);
+            this.indexComboBox3.Location = new System.Drawing.Point(183, 142);
             this.indexComboBox3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.indexComboBox3.Name = "indexComboBox3";
-            this.indexComboBox3.Size = new System.Drawing.Size(43, 24);
+            this.indexComboBox3.Size = new System.Drawing.Size(48, 24);
             this.indexComboBox3.TabIndex = 10;
             this.indexComboBox3.SelectedIndexChanged += new System.EventHandler(this.IndexComboBox_SelectedIndexChanged);
             // 
@@ -106,10 +106,10 @@
             this.indexComboBox4.FormattingEnabled = true;
             this.indexComboBox4.Items.AddRange(new object[] {
             "-"});
-            this.indexComboBox4.Location = new System.Drawing.Point(182, 173);
+            this.indexComboBox4.Location = new System.Drawing.Point(183, 173);
             this.indexComboBox4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.indexComboBox4.Name = "indexComboBox4";
-            this.indexComboBox4.Size = new System.Drawing.Size(43, 24);
+            this.indexComboBox4.Size = new System.Drawing.Size(48, 24);
             this.indexComboBox4.TabIndex = 12;
             this.indexComboBox4.SelectedIndexChanged += new System.EventHandler(this.IndexComboBox_SelectedIndexChanged);
             // 
@@ -117,7 +117,7 @@
             // 
             this.charTextBox1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.charTextBox1.Enabled = false;
-            this.charTextBox1.Location = new System.Drawing.Point(258, 83);
+            this.charTextBox1.Location = new System.Drawing.Point(264, 82);
             this.charTextBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.charTextBox1.Name = "charTextBox1";
             this.charTextBox1.ReadOnly = true;
@@ -130,7 +130,7 @@
             // 
             this.charTextBox2.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.charTextBox2.Enabled = false;
-            this.charTextBox2.Location = new System.Drawing.Point(258, 113);
+            this.charTextBox2.Location = new System.Drawing.Point(264, 112);
             this.charTextBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.charTextBox2.Name = "charTextBox2";
             this.charTextBox2.ReadOnly = true;
@@ -143,7 +143,7 @@
             // 
             this.charTextBox3.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.charTextBox3.Enabled = false;
-            this.charTextBox3.Location = new System.Drawing.Point(258, 143);
+            this.charTextBox3.Location = new System.Drawing.Point(264, 142);
             this.charTextBox3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.charTextBox3.Name = "charTextBox3";
             this.charTextBox3.ReadOnly = true;
@@ -156,7 +156,7 @@
             // 
             this.charTextBox4.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.charTextBox4.Enabled = false;
-            this.charTextBox4.Location = new System.Drawing.Point(258, 173);
+            this.charTextBox4.Location = new System.Drawing.Point(264, 172);
             this.charTextBox4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.charTextBox4.Name = "charTextBox4";
             this.charTextBox4.ReadOnly = true;
@@ -177,7 +177,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(233, 85);
+            this.label2.Location = new System.Drawing.Point(240, 85);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(18, 17);
             this.label2.TabIndex = 5;
@@ -187,7 +187,7 @@
             // 
             this.protectButton.Enabled = false;
             this.protectButton.Image = global::FieldChooser.Properties.Resources.Dots;
-            this.protectButton.Location = new System.Drawing.Point(306, 81);
+            this.protectButton.Location = new System.Drawing.Point(312, 81);
             this.protectButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.protectButton.Name = "protectButton";
             this.protectButton.Size = new System.Drawing.Size(35, 25);
@@ -199,7 +199,7 @@
             // copyButton
             // 
             this.copyButton.Image = global::FieldChooser.Properties.Resources.Copy;
-            this.copyButton.Location = new System.Drawing.Point(306, 27);
+            this.copyButton.Location = new System.Drawing.Point(312, 27);
             this.copyButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.copyButton.Name = "copyButton";
             this.copyButton.Size = new System.Drawing.Size(35, 25);
@@ -212,7 +212,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(358, 214);
+            this.ClientSize = new System.Drawing.Size(366, 214);
             this.Controls.Add(this.protectButton);
             this.Controls.Add(this.copyButton);
             this.Controls.Add(this.label2);

@@ -215,7 +215,7 @@ namespace FieldChooser
         [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            if (keyData == Keys.Escape)
+            if ((keyData == Keys.Escape) || (keyData == Keys.Enter))
             {
                 Close();
                 return true;
