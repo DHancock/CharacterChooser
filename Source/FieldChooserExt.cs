@@ -25,7 +25,7 @@ using System.Windows.Forms;
 
 using KeePass.Plugins;
 using KeePassLib;
-
+using KeePassLib.Security;
 
 namespace FieldChooser
 {
@@ -61,7 +61,25 @@ namespace FieldChooser
         {
             if (m_MenuItems.Count > 0)
             {
-                bool enable = m_Host.MainWindow.GetSelectedEntriesCount() == 1;
+                bool enable = false;
+
+                if (m_Host.MainWindow.GetSelectedEntriesCount() == 1)
+                {
+                    // only enable if one of the selected entry's relevant fields has some data
+                    PwEntry entry = m_Host.MainWindow.GetSelectedEntry(true);
+
+                    foreach (KeyValuePair<string, ProtectedString> kvp in entry.Strings)
+                    {
+                        if (kvp.Value.Length == 0)
+                            continue;
+
+                        if ((kvp.Key == PwDefs.NotesField) || (kvp.Key == PwDefs.UrlField) || (kvp.Key == PwDefs.TitleField))
+                            continue;
+
+                        enable = true;
+                        break;
+                    }
+                }
 
                 foreach (ToolStripMenuItem menuItem in m_MenuItems)
                     menuItem.Enabled = enable;
