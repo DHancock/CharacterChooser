@@ -76,34 +76,32 @@ namespace FieldChooser
 
             foreach (KeyValuePair<string, ProtectedString> kvp in Fields)
             {
-                switch (kvp.Key)
+                if (kvp.Value.Length > 0)
                 {
-                    case PwDefs.NotesField:
-                    case PwDefs.UrlField:
-                    case PwDefs.TitleField: break; // filter these out
-
-                    // always add a password entry even if its empty
-                    case PwDefs.PasswordField: standardFields.Add(new FieldEntry(KPRes.Password, kvp.Value)); break;
-
-                    default:
+                    switch (kvp.Key)
                     {
-                        if (kvp.Value.Length > 0)   // add other fields, if not empty
-                        {
-                            if (kvp.Key == PwDefs.UserNameField)
-                                standardFields.Add(new FieldEntry(KPRes.UserName, kvp.Value));
-                            else
-                                userFields.Add(new FieldEntry(kvp.Key, kvp.Value));
-                        }
+                        case PwDefs.NotesField:
+                        case PwDefs.UrlField:
+                        case PwDefs.TitleField: break; // filter these out
 
-                        break;
+                        case PwDefs.PasswordField: standardFields.Add(new FieldEntry(KPRes.Password, kvp.Value)); break;
+                        case PwDefs.UserNameField: standardFields.Add(new FieldEntry(KPRes.UserName, kvp.Value)); break;
+
+                        default: userFields.Add(new FieldEntry(kvp.Key, kvp.Value)); break;
                     }
                 }
             }
 
-            // combine user and standard fields
-            // the keys are stored by KeePass in a sorted dictionary
-            standardFields.Sort();
-            standardFields.AddRange(userFields);
+            // the plugin's menu item shouldn't have been enabled
+            Debug.Assert((standardFields.Count > 0) || (userFields.Count > 0));
+
+            // sort the translated standard fields
+            if (standardFields.Count > 0)
+                standardFields.Sort();
+
+            // the user fields are stored by KeePass in a sorted dictionary
+            if (userFields.Count > 0)
+                standardFields.AddRange(userFields);
 
             fieldComboBox.DataSource = standardFields;
             fieldComboBox.DropDownWidth = Utils.CalculateDropDownWidth(fieldComboBox);
