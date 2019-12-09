@@ -70,20 +70,32 @@ namespace FieldChooser
 
                     foreach (KeyValuePair<string, ProtectedString> kvp in entry.Strings)
                     {
-                        if (kvp.Value.Length == 0)
-                            continue;
-
-                        if ((kvp.Key == PwDefs.NotesField) || (kvp.Key == PwDefs.UrlField) || (kvp.Key == PwDefs.TitleField))
-                            continue;
-
-                        enable = true;
-                        break;
+                        if (FieldIsValid(kvp))
+                        {
+                            enable = true;
+                            break;
+                        }
                     }
                 }
 
                 foreach (ToolStripMenuItem menuItem in m_MenuItems)
                     menuItem.Enabled = enable;
             }
+        }
+
+
+        public static bool FieldIsValid(KeyValuePair<string, ProtectedString> field)
+        {
+            Debug.Assert(field.Value != null);
+            Debug.Assert(field.Key != null);
+
+            if (field.Value.IsEmpty)
+                return false;
+
+            if ((field.Key == PwDefs.NotesField) || (field.Key == PwDefs.UrlField) || (field.Key == PwDefs.TitleField))
+                return false;
+
+            return true;
         }
 
 
