@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Windows.Forms; 
 using System.Diagnostics;
 using System.Security.Permissions;
+using System.Diagnostics.CodeAnalysis;
 
 using KeePass.Plugins;
 using KeePass.Resources;
@@ -76,19 +77,14 @@ namespace FieldChooser
 
             foreach (KeyValuePair<string, ProtectedString> kvp in Fields)
             {
-                if (kvp.Value.Length > 0)
+                if (FieldChooserExt.FieldIsValid(kvp))
                 {
-                    switch (kvp.Key)
-                    {
-                        case PwDefs.NotesField:
-                        case PwDefs.UrlField:
-                        case PwDefs.TitleField: break; // filter these out
-
-                        case PwDefs.PasswordField: standardFields.Add(new FieldEntry(KPRes.Password, kvp.Value)); break;
-                        case PwDefs.UserNameField: standardFields.Add(new FieldEntry(KPRes.UserName, kvp.Value)); break;
-
-                        default: userFields.Add(new FieldEntry(kvp.Key, kvp.Value)); break;
-                    }
+                    if (kvp.Key == PwDefs.PasswordField)
+                        standardFields.Add(new FieldEntry(KPRes.Password, kvp.Value)); 
+                    else if (kvp.Key == PwDefs.UserNameField)
+                        standardFields.Add(new FieldEntry(KPRes.UserName, kvp.Value)); 
+                    else
+                        userFields.Add(new FieldEntry(kvp.Key, kvp.Value)); 
                 }
             }
 
@@ -303,12 +299,10 @@ namespace FieldChooser
                 return Name;
             }
 
-
+            [SuppressMessage("Style", "IDE0019:Use pattern matching", Justification = "C# version 5 doesn't support patterns")]
             int IComparable.CompareTo(object obj)
             {
-#pragma warning disable IDE0019 // Use pattern matching (C# language version 5 doesn't support patterns)
                 FieldEntry entry = obj as FieldEntry;
-#pragma warning restore IDE0019 // Use pattern matching
 
                 if (entry == null)
                     throw new ArgumentException(Properties.Resources.compare_exception);
