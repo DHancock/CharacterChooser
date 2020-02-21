@@ -80,7 +80,7 @@ namespace FieldChooser
                 if (FieldChooserExt.FieldIsValid(kvp))
                 {
                     if (kvp.Key == PwDefs.PasswordField)
-                        standardFields.Add(new FieldEntry(KPRes.Password, kvp.Value)); 
+                        standardFields.Insert(0, new FieldEntry(KPRes.Password, kvp.Value)); 
                     else if (kvp.Key == PwDefs.UserNameField)
                         standardFields.Add(new FieldEntry(KPRes.UserName, kvp.Value)); 
                     else
@@ -90,10 +90,6 @@ namespace FieldChooser
 
             // the plugin's menu item shouldn't have been enabled
             Debug.Assert((standardFields.Count > 0) || (userFields.Count > 0));
-
-            // sort the translated standard fields
-            if (standardFields.Count > 0)
-                standardFields.Sort();
 
             // the user fields are stored by KeePass in a sorted dictionary
             if (userFields.Count > 0)
