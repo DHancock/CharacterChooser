@@ -61,15 +61,6 @@ namespace FieldChooser.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Object to compare is null or of an invalid type.
-        /// </summary>
-        internal static string compare_exception {
-            get {
-                return ResourceManager.GetString("compare_exception", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Copy {

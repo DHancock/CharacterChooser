@@ -272,7 +272,7 @@ namespace FieldChooser
         }
 
 
-        private sealed class FieldEntry: IComparable<FieldEntry>, IComparable
+        private sealed class FieldEntry
         {
             // display name of the field
             private string Name { get; set; }
@@ -293,26 +293,6 @@ namespace FieldChooser
             public override string ToString()
             {
                 return Name;
-            }
-
-            [SuppressMessage("Style", "IDE0019:Use pattern matching", Justification = "C# version 5 doesn't support patterns")]
-            int IComparable.CompareTo(object obj)
-            {
-                FieldEntry entry = obj as FieldEntry;
-
-                if (entry == null)
-                    throw new ArgumentException(Properties.Resources.compare_exception);
-
-                return CompareTo(entry);
-            }
-
-
-            public int CompareTo(FieldEntry other)
-            {
-                if (other == null)
-                    return -1;
-
-                return string.Compare(Name, other.Name, StringComparison.CurrentCulture);
             }
         }
 
