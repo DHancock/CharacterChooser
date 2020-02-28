@@ -274,9 +274,7 @@ namespace FieldChooser
 
         private sealed class FieldEntry
         {
-            // display name of the field
-            private string Name { get; set; }
-            // the field data
+            private string DisplayName { get; set; }
             public ProtectedString Value { get; private set; }
 
 
@@ -285,14 +283,14 @@ namespace FieldChooser
                 Debug.Assert(!string.IsNullOrEmpty(name));
                 Debug.Assert(value != null);
 
-                Name = name;
+                DisplayName = name;
                 Value = value;
             }
 
 
             public override string ToString()
             {
-                return Name;
+                return DisplayName;
             }
         }
 
