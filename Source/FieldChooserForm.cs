@@ -1,5 +1,5 @@
 ﻿/*
-Copyright 2019 David Hancock
+Copyright 2019-2020 David Hancock
 
 This file is part of the FieldChooser plugin for KeePass 2.
 
