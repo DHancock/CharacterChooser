@@ -22,7 +22,8 @@ using System.Collections.Generic;
 using System.Windows.Forms; 
 using System.Diagnostics;
 using System.Security.Permissions;
-using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.Drawing;
 
 using KeePass.Plugins;
 using KeePass.Resources;
@@ -32,7 +33,7 @@ using KeePassLib.Collections;
 using KeePassLib.Security;
 using KeePass.App;
 using KeePassLib.Utility;
-using System.Globalization;
+
 
 namespace FieldChooser
 {
@@ -97,9 +98,39 @@ namespace FieldChooser
 
             fieldComboBox.DataSource = standardFields;
             fieldComboBox.DropDownWidth = Utils.CalculateDropDownWidth(fieldComboBox);
+
+            if (KeePass.Program.Config.UI.PasswordFont.OverrideUIDefault)
+                AdjustLayoutForPasswordFont();
         }
 
 
+
+        private void AdjustLayoutForPasswordFont()
+        {
+            Font passwordFont = KeePass.Program.Config.UI.PasswordFont.ToFont();
+
+            if (!Utils.FontEquals(passwordFont, charTextBox1.Font))
+            {
+                int fontHeightDifference = Math.Max(passwordFont.Height - charTextBox1.Font.Height, 0);
+                int verticalOffset = 0;
+
+                foreach (CharacterSelectorRow row in characterSelectorRows)
+                {
+                    row.CharTextBox.Font = passwordFont;
+                    row.CharTextBox.Height += fontHeightDifference;
+
+                    row.CharTextBox.Top += verticalOffset;
+                    row.IndexComboBox.Top += verticalOffset;
+
+                    verticalOffset += fontHeightDifference;
+                }
+
+                this.Height += verticalOffset;
+            }
+        }
+
+
+        
         private void FieldComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             Debug.Assert(fieldComboBox.SelectedItem is FieldEntry);
@@ -312,6 +343,17 @@ namespace FieldChooser
                 }
 
                 return width;
+            }
+
+
+            public static bool FontEquals(Font left, Font right)
+            {
+                Debug.Assert(left != null);
+                Debug.Assert(right != null);
+
+                return (left.FontFamily.Equals(right.FontFamily)) && 
+                        (left.SizeInPoints == right.SizeInPoints) && 
+                        (left.Style == right.Style);
             }
         }
     }
