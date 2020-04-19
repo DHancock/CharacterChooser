@@ -46,6 +46,8 @@
             // 
             // fieldComboBox
             // 
+            this.fieldComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.fieldComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.fieldComboBox.Location = new System.Drawing.Point(59, 27);
             this.fieldComboBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -115,10 +117,15 @@
             // 
             // charTextBox1
             // 
+            this.charTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.charTextBox1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.charTextBox1.Enabled = false;
             this.charTextBox1.Location = new System.Drawing.Point(264, 81);
             this.charTextBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.charTextBox1.MaxLength = 1;
+            this.charTextBox1.MinimumSize = new System.Drawing.Size(33, 22);
             this.charTextBox1.Name = "charTextBox1";
             this.charTextBox1.ReadOnly = true;
             this.charTextBox1.Size = new System.Drawing.Size(33, 22);
@@ -128,10 +135,15 @@
             // 
             // charTextBox2
             // 
+            this.charTextBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.charTextBox2.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.charTextBox2.Enabled = false;
             this.charTextBox2.Location = new System.Drawing.Point(264, 112);
             this.charTextBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.charTextBox2.MaxLength = 1;
+            this.charTextBox2.MinimumSize = new System.Drawing.Size(33, 22);
             this.charTextBox2.Name = "charTextBox2";
             this.charTextBox2.ReadOnly = true;
             this.charTextBox2.Size = new System.Drawing.Size(33, 22);
@@ -141,10 +153,15 @@
             // 
             // charTextBox3
             // 
+            this.charTextBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.charTextBox3.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.charTextBox3.Enabled = false;
             this.charTextBox3.Location = new System.Drawing.Point(264, 143);
             this.charTextBox3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.charTextBox3.MaxLength = 1;
+            this.charTextBox3.MinimumSize = new System.Drawing.Size(33, 22);
             this.charTextBox3.Name = "charTextBox3";
             this.charTextBox3.ReadOnly = true;
             this.charTextBox3.Size = new System.Drawing.Size(33, 22);
@@ -154,10 +171,15 @@
             // 
             // charTextBox4
             // 
+            this.charTextBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.charTextBox4.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.charTextBox4.Enabled = false;
             this.charTextBox4.Location = new System.Drawing.Point(264, 174);
             this.charTextBox4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.charTextBox4.MaxLength = 1;
+            this.charTextBox4.MinimumSize = new System.Drawing.Size(33, 22);
             this.charTextBox4.Name = "charTextBox4";
             this.charTextBox4.ReadOnly = true;
             this.charTextBox4.Size = new System.Drawing.Size(33, 22);
@@ -185,6 +207,7 @@
             // 
             // protectButton
             // 
+            this.protectButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.protectButton.Enabled = false;
             this.protectButton.Image = global::FieldChooser.Properties.Resources.Dots;
             this.protectButton.Location = new System.Drawing.Point(312, 80);
@@ -198,6 +221,7 @@
             // 
             // copyButton
             // 
+            this.copyButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.copyButton.Image = global::FieldChooser.Properties.Resources.Copy;
             this.copyButton.Location = new System.Drawing.Point(312, 27);
             this.copyButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -227,15 +251,14 @@
             this.Controls.Add(this.indexComboBox1);
             this.Controls.Add(this.fieldComboLabel);
             this.Controls.Add(this.fieldComboBox);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FieldChooserForm";
             this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Field Chooser";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FieldChooserForm_FormClosing);
             this.Load += new System.EventHandler(this.FieldChooserForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
