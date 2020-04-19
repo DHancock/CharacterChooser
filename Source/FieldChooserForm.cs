@@ -44,6 +44,10 @@ namespace FieldChooser
         private readonly List<CharacterSelectorRow> characterSelectorRows = new List<CharacterSelectorRow>();
         private int previousFieldIndex = int.MinValue;
 
+        private const string cWidthKey  = "FieldChooser.DialogInfo.Width";
+        private const string cXKey      = "FieldChooser.DialogInfo.X";
+        private const string cYKey      = "FieldChooser.DialogInfo.Y";
+
 
         private FieldChooserForm()
         {
@@ -101,9 +105,55 @@ namespace FieldChooser
 
             if (KeePass.Program.Config.UI.PasswordFont.OverrideUIDefault)
                 AdjustLayoutForPasswordFont();
+
+            // the default width and calculated height
+            this.MinimumSize = new Size(this.Width, this.Height);
+
+            // only allow width resizing, the height has been calculated
+            this.MaximumSize = new Size(int.MaxValue, this.Height);
+
+            // pin the saved width to the default width
+            this.Width = Math.Max(this.Width, (int)Host.CustomConfig.GetLong(cWidthKey, 0));
+
+            this.Location = RestoreAndValidateSavedFormLocation();
         }
 
 
+        private Point RestoreAndValidateSavedFormLocation()
+        {
+            Point location;
+
+            long savedx = Host.CustomConfig.GetLong(cXKey, long.MinValue);
+
+            if (savedx == long.MinValue)   // no configuration found, center on parent
+            {
+                location = new Point(this.Owner.Location.X + ((this.Owner.Width - this.Width) / 2),
+                                     this.Owner.Location.Y + ((this.Owner.Height - this.Height) / 2));
+            }
+            else
+                location = new Point((int)savedx, (int)Host.CustomConfig.GetLong(cYKey, 0));
+
+            // of the closest screen
+            Rectangle workingArea = Screen.FromPoint(location).WorkingArea;
+
+            // It's a dialog, there is no reason for any part of it to be obscured
+            // if that's possible. Test and adjust if necessary.
+
+            if ((location.Y + this.Height) > workingArea.Bottom)
+                location.Y = workingArea.Bottom - this.Height;
+
+            if (location.Y < workingArea.Top)
+                location.Y = workingArea.Top;
+
+            if ((location.X + this.Width) > workingArea.Right)
+                location.X = workingArea.Right - this.Width;
+
+            if (location.X < workingArea.Left)
+                location.X = workingArea.Left;
+
+            return location;
+        }
+       
 
         private void AdjustLayoutForPasswordFont()
         {
@@ -111,18 +161,19 @@ namespace FieldChooser
 
             if (!Utils.FontEquals(passwordFont, charTextBox1.Font))
             {
-                int fontHeightDifference = Math.Max(passwordFont.Height - charTextBox1.Font.Height, 0);
                 int verticalOffset = 0;
 
                 foreach (CharacterSelectorRow row in characterSelectorRows)
                 {
-                    row.CharTextBox.Font = passwordFont;
-                    row.CharTextBox.Height += fontHeightDifference;
+                    int oldTextBoxHight = row.CharTextBox.Height;
 
-                    row.CharTextBox.Top += verticalOffset;
+                    row.CharTextBox.Font = passwordFont;
+
+                    row.CharTextBox.Top += verticalOffset; 
                     row.IndexComboBox.Top += verticalOffset;
 
-                    verticalOffset += fontHeightDifference;
+                    // the text box has a minimum size property so won't shrink
+                    verticalOffset += Math.Max(row.CharTextBox.Height - oldTextBoxHight, 0);
                 }
 
                 this.Height += verticalOffset;
@@ -130,7 +181,75 @@ namespace FieldChooser
         }
 
 
-        
+
+        private void FieldChooserForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Host.CustomConfig.SetLong(cWidthKey, this.Width);
+            Host.CustomConfig.SetLong(cXKey, this.Left); 
+            Host.CustomConfig.SetLong(cYKey, this.Top);
+        }
+
+
+        // Windows message hit test result codes
+        private enum HitTest : int
+        {
+            Error = -2,
+            Transparent = -1,
+            Nowhere = 0,
+            Client = 1,
+            Caption = 2,
+            SysMenu = 3,
+            GrowBox = 4,
+            Menu = 5,
+            HScroll = 6,
+            VScroll = 7,
+            MinButton = 8,
+            MaxButton = 9,
+            Left = 10,
+            Right = 11,
+            Top = 12,
+            TopLeft = 13,
+            TopRight = 14,
+            Bottom = 15,
+            BottomLeft = 16,
+            BottomRight = 17,
+            Border = 18,
+            Close = 20,
+            Help = 21
+        }
+
+
+        // Hijack the hit test message result stopping the OS from showing the vertical 
+        // grow cursor. Vertical growing isn't valid for this dialog, it's height is calculated.
+        protected override void WndProc(ref Message m)
+        {
+            const int WM_NCHITTEST = 0x0084;
+
+            base.WndProc(ref m);
+
+            if (m.Msg == WM_NCHITTEST) 
+            {
+                HitTest result = (HitTest)m.Result.ToInt32();
+
+                switch (result)
+                {
+                    case HitTest.TopLeft:
+                    case HitTest.BottomLeft:
+                        m.Result = new IntPtr((int)HitTest.Left); break;
+
+                    case HitTest.TopRight:
+                    case HitTest.BottomRight:
+                        m.Result = new IntPtr((int)HitTest.Right); break;
+
+                    case HitTest.Top:
+                    case HitTest.Bottom:
+                        m.Result = new IntPtr((int)HitTest.Nowhere); break;
+                }
+            }
+        }
+
+
+
         private void FieldComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             Debug.Assert(fieldComboBox.SelectedItem is FieldEntry);
@@ -286,7 +405,6 @@ namespace FieldChooser
 
 
 
-
         private sealed class CharacterSelectorRow
         {
             public ComboBox IndexComboBox { get; private set; }
@@ -308,7 +426,6 @@ namespace FieldChooser
             private string DisplayName { get; set; }
             public ProtectedString Value { get; private set; }
 
-
             public FieldEntry(string name, ProtectedString value)
             {
                 Debug.Assert(!string.IsNullOrEmpty(name));
@@ -317,7 +434,6 @@ namespace FieldChooser
                 DisplayName = name;
                 Value = value;
             }
-
 
             public override string ToString()
             {
