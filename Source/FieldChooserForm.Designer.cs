@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.fieldComboBox = new System.Windows.Forms.ComboBox();
             this.fieldComboLabel = new System.Windows.Forms.Label();
             this.indexComboBox1 = new System.Windows.Forms.ComboBox();
@@ -42,6 +43,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.protectButton = new System.Windows.Forms.Button();
             this.copyButton = new System.Windows.Forms.Button();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // fieldComboBox
@@ -231,6 +233,11 @@
             this.copyButton.UseVisualStyleBackColor = true;
             this.copyButton.Click += new System.EventHandler(this.CopyButton_Click);
             // 
+            // toolTip
+            // 
+            this.toolTip.IsBalloon = true;
+            this.toolTip.Popup += new System.Windows.Forms.PopupEventHandler(this.ToolTip_Popup);
+            // 
             // FieldChooserForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -281,6 +288,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button copyButton;
         private System.Windows.Forms.Button protectButton;
+        private System.Windows.Forms.ToolTip toolTip;
     }
 }
 
