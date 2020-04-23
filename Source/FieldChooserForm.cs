@@ -24,6 +24,7 @@ using System.Diagnostics;
 using System.Security.Permissions;
 using System.Globalization;
 using System.Drawing;
+using System.Windows.Forms.VisualStyles;
 
 using KeePass.Plugins;
 using KeePass.Resources;
@@ -33,6 +34,8 @@ using KeePassLib.Collections;
 using KeePassLib.Security;
 using KeePass.App;
 using KeePassLib.Utility;
+
+using FieldChooser.Properties;
 
 
 namespace FieldChooser
@@ -44,9 +47,9 @@ namespace FieldChooser
         private readonly List<CharacterSelectorRow> characterSelectorRows = new List<CharacterSelectorRow>();
         private int previousFieldIndex = int.MinValue;
 
-        private const string cWidthKey  = "FieldChooser.DialogInfo.Width";
-        private const string cXKey      = "FieldChooser.DialogInfo.X";
-        private const string cYKey      = "FieldChooser.DialogInfo.Y";
+        private const string cWidthKey = "FieldChooser.DialogInfo.Width";
+        private const string cXKey = "FieldChooser.DialogInfo.X";
+        private const string cYKey = "FieldChooser.DialogInfo.Y";
 
 
         private FieldChooserForm()
@@ -85,11 +88,11 @@ namespace FieldChooser
                 if (FieldChooserExt.FieldIsValid(kvp))
                 {
                     if (kvp.Key == PwDefs.PasswordField)
-                        standardFields.Insert(0, new FieldEntry(KPRes.Password, kvp.Value)); 
+                        standardFields.Insert(0, new FieldEntry(KPRes.Password, kvp.Value));
                     else if (kvp.Key == PwDefs.UserNameField)
-                        standardFields.Add(new FieldEntry(KPRes.UserName, kvp.Value)); 
+                        standardFields.Add(new FieldEntry(KPRes.UserName, kvp.Value));
                     else
-                        userFields.Add(new FieldEntry(kvp.Key, kvp.Value)); 
+                        userFields.Add(new FieldEntry(kvp.Key, kvp.Value));
                 }
             }
 
@@ -103,8 +106,7 @@ namespace FieldChooser
             fieldComboBox.DataSource = standardFields;
             fieldComboBox.DropDownWidth = Utils.CalculateDropDownWidth(fieldComboBox);
 
-            if (KeePass.Program.Config.UI.PasswordFont.OverrideUIDefault)
-                AdjustLayoutForPasswordFont();
+            AdjustLayoutForPasswordFont();
 
             // the default width and calculated height
             this.MinimumSize = new Size(this.Width, this.Height);
@@ -117,6 +119,7 @@ namespace FieldChooser
 
             this.Location = RestoreAndValidateSavedFormLocation();
         }
+
 
 
         private Point RestoreAndValidateSavedFormLocation()
@@ -153,7 +156,8 @@ namespace FieldChooser
 
             return location;
         }
-       
+
+
 
         private void AdjustLayoutForPasswordFont()
         {
@@ -169,7 +173,7 @@ namespace FieldChooser
 
                     row.CharTextBox.Font = passwordFont;
 
-                    row.CharTextBox.Top += verticalOffset; 
+                    row.CharTextBox.Top += verticalOffset;
                     row.IndexComboBox.Top += verticalOffset;
 
                     // the text box has a minimum size property so won't shrink
@@ -185,38 +189,10 @@ namespace FieldChooser
         private void FieldChooserForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             Host.CustomConfig.SetLong(cWidthKey, this.Width);
-            Host.CustomConfig.SetLong(cXKey, this.Left); 
+            Host.CustomConfig.SetLong(cXKey, this.Left);
             Host.CustomConfig.SetLong(cYKey, this.Top);
         }
 
-
-        // Windows message hit test result codes
-        private enum HitTest : int
-        {
-            Error = -2,
-            Transparent = -1,
-            Nowhere = 0,
-            Client = 1,
-            Caption = 2,
-            SysMenu = 3,
-            GrowBox = 4,
-            Menu = 5,
-            HScroll = 6,
-            VScroll = 7,
-            MinButton = 8,
-            MaxButton = 9,
-            Left = 10,
-            Right = 11,
-            Top = 12,
-            TopLeft = 13,
-            TopRight = 14,
-            Bottom = 15,
-            BottomLeft = 16,
-            BottomRight = 17,
-            Border = 18,
-            Close = 20,
-            Help = 21
-        }
 
 
         // Hijack the hit test message result stopping the OS from showing the vertical 
@@ -227,23 +203,23 @@ namespace FieldChooser
 
             base.WndProc(ref m);
 
-            if (m.Msg == WM_NCHITTEST) 
+            if (m.Msg == WM_NCHITTEST)
             {
-                HitTest result = (HitTest)m.Result.ToInt32();
+                HitTestCode result = (HitTestCode)m.Result.ToInt32();
 
                 switch (result)
                 {
-                    case HitTest.TopLeft:
-                    case HitTest.BottomLeft:
-                        m.Result = new IntPtr((int)HitTest.Left); break;
+                    case HitTestCode.TopLeft:
+                    case HitTestCode.BottomLeft:
+                        m.Result = new IntPtr((int)HitTestCode.Left); break;
 
-                    case HitTest.TopRight:
-                    case HitTest.BottomRight:
-                        m.Result = new IntPtr((int)HitTest.Right); break;
+                    case HitTestCode.TopRight:
+                    case HitTestCode.BottomRight:
+                        m.Result = new IntPtr((int)HitTestCode.Right); break;
 
-                    case HitTest.Top:
-                    case HitTest.Bottom:
-                        m.Result = new IntPtr((int)HitTest.Nowhere); break;
+                    case HitTestCode.Top:
+                    case HitTestCode.Bottom:
+                        m.Result = new IntPtr((int)HitTestCode.Nowhere); break;
                 }
             }
         }
@@ -265,7 +241,7 @@ namespace FieldChooser
                 int requiredComboBoxItemCount = pString.Length + 1;
 
                 if (indexComboBox1.Items.Count != requiredComboBoxItemCount)
-                { 
+                {
                     if (indexComboBox1.Items.Count < requiredComboBoxItemCount)
                     {
                         for (int index = indexComboBox1.Items.Count; index < requiredComboBoxItemCount; index++)
@@ -317,8 +293,8 @@ namespace FieldChooser
             {
                 if (ReferenceEquals(row.IndexComboBox, sender))
                     entryProtected = LoadCharacterTextBox(row.IndexComboBox.SelectedIndex, row.CharTextBox);
-                
-                characterSelected |= row.IndexComboBox.SelectedIndex > 0 ;
+
+                characterSelected |= row.IndexComboBox.SelectedIndex > 0;
             }
 
             protectButton.Enabled = entryProtected && characterSelected;
@@ -363,8 +339,8 @@ namespace FieldChooser
 
             return base.ProcessCmdKey(ref msg, keyData);
         }
-        
-         
+
+
 
         private void CopyButton_Click(object sender, EventArgs e)
         {
@@ -389,10 +365,11 @@ namespace FieldChooser
         private void ProtectButtonEnabledStateChanged(object sender, EventArgs e)
         {
             if (protectButton.Enabled)
-                protectButton.Image = Properties.Resources.Dots;
+                protectButton.Image = Resources.Dots;
             else
-                protectButton.Image = Properties.Resources.DotsDisabled;
+                protectButton.Image = Resources.DotsDisabled;
         }
+
 
 
         private void CharTextBox_TextChanged(object sender, EventArgs e)
@@ -400,7 +377,73 @@ namespace FieldChooser
             Debug.Assert(sender is TextBox);
 
             TextBox tb = sender as TextBox;
-            tb.Enabled = !string.IsNullOrEmpty(tb.Text);
+
+            if (string.IsNullOrEmpty(tb.Text))
+                tb.Enabled = false;
+            else
+            {
+                tb.Enabled = true;
+                toolTip.SetToolTip(tb, GetUnicodeCategoryDescription(tb.Text[0]));
+            }
+        }
+
+
+
+        private void ToolTip_Popup(object sender, PopupEventArgs e)
+        {
+            Debug.Assert(e.AssociatedControl is TextBox);
+            e.Cancel = (e.AssociatedControl as TextBox).UseSystemPasswordChar;
+        }
+
+
+
+        /// <summary>
+        /// Gets a description of the Unicode category that the supplied
+        /// character belongs to. Helps the user identify which look a 
+        /// like character they are dealing with.
+        /// </summary>
+        /// <param name="c"></param>
+        /// <returns>category description</returns>
+        private string GetUnicodeCategoryDescription(char c)
+        {
+            string s = string.Empty;
+            UnicodeCategory uc = Char.GetUnicodeCategory(c);
+
+            switch (uc)
+            {
+                case UnicodeCategory.UppercaseLetter: s = Resources.Lu; break;
+                case UnicodeCategory.LowercaseLetter: s = Resources.Ll; break;
+                case UnicodeCategory.TitlecaseLetter: s = Resources.Lt; break;
+                case UnicodeCategory.ModifierLetter: s = Resources.Lm; break;
+                case UnicodeCategory.OtherLetter: s = Resources.Lo; break;
+                case UnicodeCategory.NonSpacingMark: s = Resources.Mn; break;
+                case UnicodeCategory.SpacingCombiningMark: s = Resources.Mc; break;
+                case UnicodeCategory.EnclosingMark: s = Resources.Me; break;
+                case UnicodeCategory.DecimalDigitNumber: s = Resources.Nd; break;
+                case UnicodeCategory.LetterNumber: s = Resources.Nl; break;
+                case UnicodeCategory.OtherNumber: s = Resources.No; break;
+                case UnicodeCategory.SpaceSeparator: s = Resources.Zs; break;
+                case UnicodeCategory.LineSeparator: s = Resources.Zl; break;
+                case UnicodeCategory.ParagraphSeparator: s = Resources.Zp; break;
+                case UnicodeCategory.Control: s = Resources.Cc; break;
+                case UnicodeCategory.Format: s = Resources.Cf; break;
+                case UnicodeCategory.Surrogate: s = Resources.Cs; break;
+                case UnicodeCategory.PrivateUse: s = Resources.Co; break;
+                case UnicodeCategory.ConnectorPunctuation: s = Resources.Pc; break;
+                case UnicodeCategory.DashPunctuation: s = Resources.Pd; break;
+                case UnicodeCategory.OpenPunctuation: s = Resources.Po; break;
+                case UnicodeCategory.ClosePunctuation: s = Resources.Pc; break;
+                case UnicodeCategory.InitialQuotePunctuation: s = Resources.Pi; break;
+                case UnicodeCategory.FinalQuotePunctuation: s = Resources.Pf; break;
+                case UnicodeCategory.OtherPunctuation: s = Resources.Po; break;
+                case UnicodeCategory.MathSymbol: s = Resources.Sm; break;
+                case UnicodeCategory.CurrencySymbol: s = Resources.Sc; break;
+                case UnicodeCategory.ModifierSymbol: s = Resources.Sk; break;
+                case UnicodeCategory.OtherSymbol: s = Resources.So; break;
+                case UnicodeCategory.OtherNotAssigned: s = Resources.Cn; break;
+            }
+
+            return s;
         }
 
 
@@ -423,7 +466,7 @@ namespace FieldChooser
 
         private sealed class FieldEntry
         {
-            private string DisplayName { get; set; }
+            private string Name { get; set; }
             public ProtectedString Value { get; private set; }
 
             public FieldEntry(string name, ProtectedString value)
@@ -431,15 +474,17 @@ namespace FieldChooser
                 Debug.Assert(!string.IsNullOrEmpty(name));
                 Debug.Assert(value != null);
 
-                DisplayName = name;
+                Name = name;
                 Value = value;
             }
 
             public override string ToString()
             {
-                return DisplayName;
+                return Name;
             }
         }
+
+
 
         private static class Utils
         {
@@ -467,8 +512,8 @@ namespace FieldChooser
                 Debug.Assert(left != null);
                 Debug.Assert(right != null);
 
-                return (left.FontFamily.Equals(right.FontFamily)) && 
-                        (left.SizeInPoints == right.SizeInPoints) && 
+                return (left.FontFamily.Equals(right.FontFamily)) &&
+                        (left.SizeInPoints == right.SizeInPoints) &&
                         (left.Style == right.Style);
             }
         }

@@ -133,4 +133,94 @@
   <data name="DotsDisabled" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\DotsDisabled.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Cc" xml:space="preserve">
+    <value>C0 or C1 control code</value>
+  </data>
+  <data name="Cf" xml:space="preserve">
+    <value>format control character</value>
+  </data>
+  <data name="Cn" xml:space="preserve">
+    <value>unassigned character</value>
+  </data>
+  <data name="Co" xml:space="preserve">
+    <value>private use character</value>
+  </data>
+  <data name="Cs" xml:space="preserve">
+    <value>suragate code point</value>
+  </data>
+  <data name="Ll" xml:space="preserve">
+    <value>lowercase letter</value>
+  </data>
+  <data name="Lm" xml:space="preserve">
+    <value>modifier letter</value>
+  </data>
+  <data name="Lo" xml:space="preserve">
+    <value>other letters, including syllables and ideographs</value>
+  </data>
+  <data name="Lt" xml:space="preserve">
+    <value>digraphic character, with first part uppercase</value>
+  </data>
+  <data name="Lu" xml:space="preserve">
+    <value>uppercase letter</value>
+  </data>
+  <data name="Mc" xml:space="preserve">
+    <value>spacing combining mark</value>
+  </data>
+  <data name="Me" xml:space="preserve">
+    <value>enclosing combining mark</value>
+  </data>
+  <data name="Mn" xml:space="preserve">
+    <value>nonspacing combining mark</value>
+  </data>
+  <data name="Nd" xml:space="preserve">
+    <value>decimal digit</value>
+  </data>
+  <data name="Nl" xml:space="preserve">
+    <value>letter like numeric character</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>numeric character</value>
+  </data>
+  <data name="Pc" xml:space="preserve">
+    <value>punctuation mark</value>
+  </data>
+  <data name="Pd" xml:space="preserve">
+    <value>dash or hyphen punctuation mark</value>
+  </data>
+  <data name="Pe" xml:space="preserve">
+    <value>closing punctuation mark</value>
+  </data>
+  <data name="Pf" xml:space="preserve">
+    <value>final quotation mark</value>
+  </data>
+  <data name="Pi" xml:space="preserve">
+    <value>initial quotation mark</value>
+  </data>
+  <data name="Po" xml:space="preserve">
+    <value>punctuation mark</value>
+  </data>
+  <data name="Ps" xml:space="preserve">
+    <value>opening punctuation mark</value>
+  </data>
+  <data name="Sc" xml:space="preserve">
+    <value>currency symbol</value>
+  </data>
+  <data name="Sk" xml:space="preserve">
+    <value>non-letterlike modifier symbol</value>
+  </data>
+  <data name="Sm" xml:space="preserve">
+    <value>mathematical symbol</value>
+  </data>
+  <data name="So" xml:space="preserve">
+    <value>symbol</value>
+  </data>
+  <data name="Zl" xml:space="preserve">
+    <value>line seperator</value>
+  </data>
+  <data name="Zp" xml:space="preserve">
+    <value>paragraph seperator</value>
+  </data>
+  <data name="Zs" xml:space="preserve">
+    <value>space character</value>
+  </data>
 </root>
