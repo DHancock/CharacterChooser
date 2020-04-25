@@ -431,8 +431,8 @@ namespace FieldChooser
                 case UnicodeCategory.PrivateUse: s = Resources.Co; break;
                 case UnicodeCategory.ConnectorPunctuation: s = Resources.Pc; break;
                 case UnicodeCategory.DashPunctuation: s = Resources.Pd; break;
-                case UnicodeCategory.OpenPunctuation: s = Resources.Po; break;
-                case UnicodeCategory.ClosePunctuation: s = Resources.Pc; break;
+                case UnicodeCategory.OpenPunctuation: s = Resources.Ps; break;
+                case UnicodeCategory.ClosePunctuation: s = Resources.Pe; break;
                 case UnicodeCategory.InitialQuotePunctuation: s = Resources.Pi; break;
                 case UnicodeCategory.FinalQuotePunctuation: s = Resources.Pf; break;
                 case UnicodeCategory.OtherPunctuation: s = Resources.Po; break;
