@@ -24,6 +24,7 @@ using System.Drawing;
 using System.Windows.Forms;
 
 using KeePass.Plugins;
+using KeePass.Resources;
 using KeePassLib;
 using KeePassLib.Security;
 
@@ -84,7 +85,7 @@ namespace FieldChooser
         }
 
 
-        public static bool FieldIsValid(KeyValuePair<string, ProtectedString> field)
+        private static bool FieldIsValid(KeyValuePair<string, ProtectedString> field)
         {
             Debug.Assert(field.Value != null);
             Debug.Assert(field.Key != null);
@@ -97,6 +98,7 @@ namespace FieldChooser
 
             return true;
         }
+
 
 
         /// <summary>
@@ -113,31 +115,70 @@ namespace FieldChooser
             // In KeePass 2.41 this is called once and the single menu item added to an
             // entry's context menu. In KeePass 2.42.1 it is called twice, the menus are
             // added to the context menu and the new Entry drop down menu on the main window.
-            ToolStripMenuItem menuItem = new ToolStripMenuItem
-            {
-                Text = Properties.Resources.menu_text,
-                Image = Properties.Resources.Menu_16x
-            };
+            ToolStripMenuItem menuItem = new ToolStripMenuItem(Properties.Resources.menu_text, null, new ToolStripMenuItem());
 
-            menuItem.Click += delegate (object sender, EventArgs e)
+
+            menuItem.DropDownOpening += delegate (object sender, EventArgs e)
             {
+                // dump existing...
+                menuItem.DropDownItems.Clear();
+               
+                // rebuild current...
+                List<ToolStripMenuItem> userFields = new List<ToolStripMenuItem>();
+                
                 PwEntry entry = m_Host.MainWindow.GetSelectedEntry(true);
-                Debug.Assert(entry != null);
 
-                if (entry != null)
+                foreach (KeyValuePair<string, ProtectedString> kvp in entry.Strings)
                 {
-                    using (FieldChooserForm form = new FieldChooserForm(m_Host, entry.Strings))
+                    if (FieldIsValid(kvp))
                     {
-                        form.ShowDialog(m_Host.MainWindow);
+                        ToolStripMenuItem subMenuItem = new ToolStripMenuItem
+                        {
+                            Image = Properties.Resources.Menu_16x,
+                            Tag = kvp.Value
+                        };
+
+                        if (kvp.Key == PwDefs.PasswordField)
+                        {
+                            subMenuItem.Text = KPRes.Password;
+                            menuItem.DropDownItems.Insert(0, subMenuItem);
+                        }
+                        else if (kvp.Key == PwDefs.UserNameField)
+                        {
+                            subMenuItem.Text = KPRes.UserName;
+                            menuItem.DropDownItems.Add(subMenuItem);
+                        }
+                        else
+                        {
+                            subMenuItem.Text = kvp.Key;
+                            userFields.Add(subMenuItem);
+                        }
                     }
                 }
+
+                // the plugin's menu item shouldn't have been enabled
+                Debug.Assert((menuItem.DropDownItems.Count > 0) || (userFields.Count > 0));
+
+                if (userFields.Count > 0)
+                    menuItem.DropDownItems.AddRange(userFields.ToArray());
             };
+
+
+            menuItem.DropDownItemClicked += delegate (object sender, ToolStripItemClickedEventArgs e)
+            {
+                using (FieldChooserForm form = new FieldChooserForm(m_Host, menuItem.DropDownItems, e.ClickedItem))
+                {
+                    form.ShowDialog(m_Host.MainWindow);
+                }
+            };
+
 
             // record each menu item created
             m_MenuItems.Add(menuItem);
 
             return menuItem;
         }
+
 
 
         /// <summary>
