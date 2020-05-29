@@ -33,8 +33,8 @@ namespace FieldChooser
 
     public sealed class FieldChooserExt : Plugin
     {
-        private IPluginHost m_Host;
-        private readonly List<ToolStripMenuItem> m_MenuItems = new List<ToolStripMenuItem>();
+        private IPluginHost Host { get; set; }
+        private readonly List<ToolStripMenuItem> MenuItems = new List<ToolStripMenuItem>();
 
         /// <summary>
         /// The <c>Initialize</c> method is called by KeePass when
@@ -52,22 +52,22 @@ namespace FieldChooser
             if (host == null)
                 return false;
 
-            m_Host = host;
-            m_Host.MainWindow.UIStateUpdated += MainWindow_UIStateUpdated;
+            Host = host;
+            Host.MainWindow.UIStateUpdated += MainWindow_UIStateUpdated;
             return true;           
         }
 
 
         private void MainWindow_UIStateUpdated(object sender, EventArgs e)
         {
-            if (m_MenuItems.Count > 0)
+            if (MenuItems.Count > 0)
             {
                 bool enable = false;
 
-                if (m_Host.MainWindow.GetSelectedEntriesCount() == 1)
+                if (Host.MainWindow.GetSelectedEntriesCount() == 1)
                 {
                     // only enable if one of the selected entry's relevant fields has some data
-                    PwEntry entry = m_Host.MainWindow.GetSelectedEntry(true);
+                    PwEntry entry = Host.MainWindow.GetSelectedEntry(true);
 
                     foreach (KeyValuePair<string, ProtectedString> kvp in entry.Strings)
                     {
@@ -79,7 +79,7 @@ namespace FieldChooser
                     }
                 }
 
-                foreach (ToolStripMenuItem menuItem in m_MenuItems)
+                foreach (ToolStripMenuItem menuItem in MenuItems)
                     menuItem.Enabled = enable;
             }
         }
@@ -126,7 +126,7 @@ namespace FieldChooser
                 // rebuild current...
                 List<ToolStripMenuItem> userFields = new List<ToolStripMenuItem>();
                 
-                PwEntry entry = m_Host.MainWindow.GetSelectedEntry(true);
+                PwEntry entry = Host.MainWindow.GetSelectedEntry(true);
 
                 foreach (KeyValuePair<string, ProtectedString> kvp in entry.Strings)
                 {
@@ -166,15 +166,15 @@ namespace FieldChooser
 
             menuItem.DropDownItemClicked += delegate (object sender, ToolStripItemClickedEventArgs e)
             {
-                using (FieldChooserForm form = new FieldChooserForm(m_Host, menuItem.DropDownItems, e.ClickedItem))
+                using (FieldChooserForm form = new FieldChooserForm(Host, menuItem.DropDownItems, e.ClickedItem))
                 {
-                    form.ShowDialog(m_Host.MainWindow);
+                    form.ShowDialog(Host.MainWindow);
                 }
             };
 
 
             // record each menu item created
-            m_MenuItems.Add(menuItem);
+            MenuItems.Add(menuItem);
 
             return menuItem;
         }
@@ -219,9 +219,9 @@ namespace FieldChooser
         /// </summary>
         public override void Terminate()
         {
-            m_Host.MainWindow.UIStateUpdated -= MainWindow_UIStateUpdated;
+            Host.MainWindow.UIStateUpdated -= MainWindow_UIStateUpdated;
 
-            foreach (ToolStripMenuItem menuItem in m_MenuItems)
+            foreach (ToolStripMenuItem menuItem in MenuItems)
             {                
                 ToolStrip parent = menuItem.GetCurrentParent();
 
@@ -231,7 +231,7 @@ namespace FieldChooser
                 menuItem.Dispose();
             }
 
-            m_MenuItems.Clear();
+            MenuItems.Clear();
         }
     }
 }
