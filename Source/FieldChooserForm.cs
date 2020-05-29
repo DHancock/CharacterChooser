@@ -27,10 +27,7 @@ using System.Drawing;
 using System.Windows.Forms.VisualStyles;
 
 using KeePass.Plugins;
-using KeePass.Resources;
 using KeePass.Util;
-using KeePassLib;
-using KeePassLib.Collections;
 using KeePassLib.Security;
 using KeePass.App;
 using KeePassLib.Utility;
@@ -43,7 +40,7 @@ namespace FieldChooser
     public partial class FieldChooserForm : Form
     {
         private IPluginHost Host { get; set; }
-        private ProtectedStringDictionary Fields { get; set; }
+
         private readonly List<CharacterSelectorRow> characterSelectorRows = new List<CharacterSelectorRow>();
         private int previousFieldIndex = int.MinValue;
 
@@ -58,18 +55,14 @@ namespace FieldChooser
         }
 
 
-        public FieldChooserForm(IPluginHost host, ProtectedStringDictionary fields) : this()
+        internal FieldChooserForm(IPluginHost host, ToolStripItemCollection fields, ToolStripItem startField) : this()
         {
             Debug.Assert(host != null);
             Debug.Assert(fields != null);
+            Debug.Assert(startField != null);
 
             Host = host;
-            Fields = fields;
-        }
 
-
-        private void FieldChooserForm_Load(object sender, EventArgs e)
-        {
             // the standard KeePass app icon
             Icon = AppIcons.Default;
 
@@ -80,30 +73,17 @@ namespace FieldChooser
             characterSelectorRows.Add(new CharacterSelectorRow(indexComboBox4, charTextBox4));
 
             // build the field combo box items
-            List<FieldEntry> standardFields = new List<FieldEntry>();
-            List<FieldEntry> userFields = new List<FieldEntry>();
+            foreach (ToolStripItem item in fields)
+                fieldComboBox.Items.Add(item);
 
-            foreach (KeyValuePair<string, ProtectedString> kvp in Fields)
-            {
-                if (FieldChooserExt.FieldIsValid(kvp))
-                {
-                    if (kvp.Key == PwDefs.PasswordField)
-                        standardFields.Insert(0, new FieldEntry(KPRes.Password, kvp.Value));
-                    else if (kvp.Key == PwDefs.UserNameField)
-                        standardFields.Add(new FieldEntry(KPRes.UserName, kvp.Value));
-                    else
-                        userFields.Add(new FieldEntry(kvp.Key, kvp.Value));
-                }
-            }
+            fieldComboBox.SelectedItem = startField;
+            fieldComboBox.DisplayMember = "Text";
+        }
 
-            // the plugin's menu item shouldn't have been enabled
-            Debug.Assert((standardFields.Count > 0) || (userFields.Count > 0));
 
-            // the user fields are stored by KeePass in a sorted dictionary
-            if (userFields.Count > 0)
-                standardFields.AddRange(userFields);
-
-            fieldComboBox.DataSource = standardFields;
+        private void FieldChooserForm_Load(object sender, EventArgs e)
+        {
+            // adjust the layout as required
             fieldComboBox.DropDownWidth = Utils.CalculateDropDownWidth(fieldComboBox);
 
             AdjustLayoutForPasswordFont();
@@ -228,14 +208,12 @@ namespace FieldChooser
 
         private void FieldComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Debug.Assert(fieldComboBox.SelectedItem is FieldEntry);
-
             // ensure that the index has changed
             if (fieldComboBox.SelectedIndex != previousFieldIndex)
             {
                 previousFieldIndex = fieldComboBox.SelectedIndex;
 
-                ProtectedString pString = (fieldComboBox.SelectedItem as FieldEntry).Value;
+                ProtectedString pString = (ProtectedString)((ToolStripItem)fieldComboBox.SelectedItem).Tag;
 
                 // adjust the number of combo box items
                 int requiredComboBoxItemCount = pString.Length + 1;
@@ -304,9 +282,7 @@ namespace FieldChooser
 
         private bool LoadCharacterTextBox(int selectedIndex, TextBox textBox)
         {
-            Debug.Assert(fieldComboBox.SelectedItem is FieldEntry);
-
-            ProtectedString pString = (fieldComboBox.SelectedItem as FieldEntry).Value;
+            ProtectedString pString = (ProtectedString)((ToolStripItem)fieldComboBox.SelectedItem).Tag;
 
             Debug.Assert(selectedIndex <= pString.Length);
 
@@ -344,9 +320,7 @@ namespace FieldChooser
 
         private void CopyButton_Click(object sender, EventArgs e)
         {
-            Debug.Assert(fieldComboBox.SelectedItem is FieldEntry);
-
-            ProtectedString pString = (fieldComboBox.SelectedItem as FieldEntry).Value;
+            ProtectedString pString = (ProtectedString)((ToolStripItem)fieldComboBox.SelectedItem).Tag;
 
             if (ClipboardUtil.CopyAndMinimize(pString, false, this, null, null))
                 Host.MainWindow.StartClipboardCountdown();
@@ -460,27 +434,6 @@ namespace FieldChooser
 
                 IndexComboBox = comboBox;
                 CharTextBox = textBox;
-            }
-        }
-
-
-        private sealed class FieldEntry
-        {
-            private string Name { get; set; }
-            public ProtectedString Value { get; private set; }
-
-            public FieldEntry(string name, ProtectedString value)
-            {
-                Debug.Assert(!string.IsNullOrEmpty(name));
-                Debug.Assert(value != null);
-
-                Name = name;
-                Value = value;
-            }
-
-            public override string ToString()
-            {
-                return Name;
             }
         }
 
