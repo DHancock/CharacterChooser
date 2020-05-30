@@ -34,7 +34,13 @@ namespace FieldChooser
     public sealed class FieldChooserExt : Plugin
     {
         private IPluginHost Host { get; set; }
-        private readonly List<ToolStripMenuItem> MenuItems = new List<ToolStripMenuItem>();
+        private List<ToolStripMenuItem> MenuItems { get; set; }
+
+
+        public FieldChooserExt()
+        {
+            MenuItems = new List<ToolStripMenuItem>();
+        }
 
         /// <summary>
         /// The <c>Initialize</c> method is called by KeePass when

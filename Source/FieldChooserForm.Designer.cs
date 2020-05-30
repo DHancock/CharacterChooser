@@ -264,7 +264,7 @@
             this.MinimizeBox = false;
             this.Name = "FieldChooserForm";
             this.ShowInTaskbar = false;
-            this.Text = "Field Chooser";
+            this.Text = "Character Chooser";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FieldChooserForm_FormClosing);
             this.Load += new System.EventHandler(this.FieldChooserForm_Load);
             this.ResumeLayout(false);
