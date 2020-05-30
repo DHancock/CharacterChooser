@@ -32,30 +32,30 @@ using KeePassLib.Security;
 using KeePass.App;
 using KeePassLib.Utility;
 
-using FieldChooser.Properties;
+using CharacterChooser.Properties;
 
 
-namespace FieldChooser
+namespace CharacterChooser
 {
-    public partial class FieldChooserForm : Form
+    public partial class CharacterChooserForm : Form
     {
         private IPluginHost Host { get; set; }
 
         private readonly List<CharacterSelectorRow> characterSelectorRows = new List<CharacterSelectorRow>();
         private int previousFieldIndex = int.MinValue;
 
-        private const string cWidthKey = "FieldChooser.DialogInfo.Width";
-        private const string cXKey = "FieldChooser.DialogInfo.X";
-        private const string cYKey = "FieldChooser.DialogInfo.Y";
+        private const string cWidthKey = "CharacterChooser.DialogInfo.Width";
+        private const string cXKey = "CharacterChooser.DialogInfo.X";
+        private const string cYKey = "CharacterChooser.DialogInfo.Y";
 
 
-        private FieldChooserForm()
+        private CharacterChooserForm()
         {
             InitializeComponent();
         }
 
 
-        internal FieldChooserForm(IPluginHost host, ToolStripItemCollection fields, ToolStripItem startField) : this()
+        internal CharacterChooserForm(IPluginHost host, ToolStripItemCollection fields, ToolStripItem startField) : this()
         {
             Debug.Assert(host != null);
             Debug.Assert(fields != null);

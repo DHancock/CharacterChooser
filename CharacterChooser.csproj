@@ -10,8 +10,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{4F945E12-2596-40AF-B4FB-33EBBC5D747E}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>FieldChooser</RootNamespace>
-    <AssemblyName>FieldChooser</AssemblyName>
+    <RootNamespace>CharacterChooser</RootNamespace>
+    <AssemblyName>CharacterChooser</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -59,16 +59,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Source\FieldChooserForm.cs">
+    <Compile Include="Source\CharacterChooserForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Source\FieldChooserForm.Designer.cs">
-      <DependentUpon>FieldChooserForm.cs</DependentUpon>
+    <Compile Include="Source\CharacterChooserForm.Designer.cs">
+      <DependentUpon>CharacterChooserForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Source\FieldChooserExt.cs" />
+    <Compile Include="Source\CharacterChooserExt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Source\FieldChooserForm.resx">
-      <DependentUpon>FieldChooserForm.cs</DependentUpon>
+    <EmbeddedResource Include="Source\CharacterChooserForm.resx">
+      <DependentUpon>CharacterChooserForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -76,10 +76,10 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="build_plgx.bat" />
-    <None Include="FieldChooser.version">
+    <None Include="packages.config" />
+    <None Include="plugin.version">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Copy.png" />

@@ -28,16 +28,16 @@ using KeePass.Resources;
 using KeePassLib;
 using KeePassLib.Security;
 
-namespace FieldChooser
+namespace CharacterChooser
 {
 
-    public sealed class FieldChooserExt : Plugin
+    public sealed class CharacterChooserExt : Plugin
     {
         private IPluginHost Host { get; set; }
         private List<ToolStripMenuItem> MenuItems { get; set; }
 
 
-        public FieldChooserExt()
+        public CharacterChooserExt()
         {
             MenuItems = new List<ToolStripMenuItem>();
         }
@@ -172,7 +172,7 @@ namespace FieldChooser
 
             menuItem.DropDownItemClicked += delegate (object sender, ToolStripItemClickedEventArgs e)
             {
-                using (FieldChooserForm form = new FieldChooserForm(Host, menuItem.DropDownItems, e.ClickedItem))
+                using (CharacterChooserForm form = new CharacterChooserForm(Host, menuItem.DropDownItems, e.ClickedItem))
                 {
                     form.ShowDialog(Host.MainWindow);
                 }
@@ -196,10 +196,10 @@ namespace FieldChooser
             get
             {
 #if DEBUG
-                string dir = System.IO.Path.GetDirectoryName(typeof(FieldChooserExt).Assembly.Location);
-                return System.IO.Path.Combine(dir, "FieldChooser.version");
+                string dir = System.IO.Path.GetDirectoryName(typeof(CharacterChooserExt).Assembly.Location);
+                return System.IO.Path.Combine(dir, "plugin.version");
 #else
-                return "https://raw.githubusercontent.com/DHancock/FieldChooser/master/FieldChooser.version";
+                return "https://raw.githubusercontent.com/DHancock/FielChooser/master/plugin.version";
 #endif
             }
         }
