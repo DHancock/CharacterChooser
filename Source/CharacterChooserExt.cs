@@ -22,6 +22,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
+#if DEBUG
+using System.IO;
+#endif
 
 using KeePass.Plugins;
 using KeePass.Resources;
@@ -196,10 +199,10 @@ namespace CharacterChooser
             get
             {
 #if DEBUG
-                string dir = System.IO.Path.GetDirectoryName(typeof(CharacterChooserExt).Assembly.Location);
-                return System.IO.Path.Combine(dir, "plugin.version");
+                string dir = Path.GetDirectoryName(typeof(CharacterChooserExt).Assembly.Location);
+                return Path.Combine(dir, "plugin.version");
 #else
-                return "https://raw.githubusercontent.com/DHancock/FielChooser/master/plugin.version";
+                return "https://raw.githubusercontent.com/DHancock/CharacterChooser/master/plugin.version";
 #endif
             }
         }
