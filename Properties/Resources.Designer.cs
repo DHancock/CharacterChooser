@@ -209,7 +209,7 @@ namespace FieldChooser.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Choose Fields....
+        ///   Looks up a localized string similar to Character Chooser.
         /// </summary>
         internal static string menu_text {
             get {
