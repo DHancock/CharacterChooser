@@ -1,6 +1,6 @@
-﻿namespace FieldChooser
+﻿namespace CharacterChooser
 {
-    partial class FieldChooserForm
+    partial class CharacterChooserForm
     {
         /// <summary>
         /// Required designer variable.
@@ -211,7 +211,7 @@
             // 
             this.protectButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.protectButton.Enabled = false;
-            this.protectButton.Image = global::FieldChooser.Properties.Resources.Dots;
+            this.protectButton.Image = global::CharacterChooser.Properties.Resources.Dots;
             this.protectButton.Location = new System.Drawing.Point(312, 80);
             this.protectButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.protectButton.Name = "protectButton";
@@ -224,7 +224,7 @@
             // copyButton
             // 
             this.copyButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.copyButton.Image = global::FieldChooser.Properties.Resources.Copy;
+            this.copyButton.Image = global::CharacterChooser.Properties.Resources.Copy;
             this.copyButton.Location = new System.Drawing.Point(312, 27);
             this.copyButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.copyButton.Name = "copyButton";
