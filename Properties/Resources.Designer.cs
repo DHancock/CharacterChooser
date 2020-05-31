@@ -299,6 +299,16 @@ namespace CharacterChooser.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Plugin_16x {
+            get {
+                object obj = ResourceManager.GetObject("Plugin_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to punctuation mark.
         /// </summary>
         internal static string Po {
