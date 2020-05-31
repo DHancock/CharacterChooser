@@ -1,20 +1,20 @@
 ﻿/*
 Copyright 2019-2020 David Hancock
 
-This file is part of the FieldChooser plugin for KeePass 2.
+This file is part of the CharacterChooser plugin for KeePass 2.
 
-FieldChooser is free software: you can redistribute it and/or modify
+CharacterChooser is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 2 of the License, or
 (at your option) any later version.
 
-FieldChooser is distributed in the hope that it will be useful,
+CharacterChooser is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with FieldChooser.  If not, see<https://www.gnu.org/licenses/>.
+along with CharacterChooser.  If not, see<https://www.gnu.org/licenses/>.
 */
 
 using System;
@@ -216,7 +216,7 @@ namespace CharacterChooser
         /// </summary>
         public override Image SmallIcon
         {
-            get { return Properties.Resources.Menu_16x; }
+            get { return Properties.Resources.Plugin_16x; }
         }
 
 

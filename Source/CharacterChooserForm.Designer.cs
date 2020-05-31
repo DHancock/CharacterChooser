@@ -238,7 +238,7 @@
             this.toolTip.IsBalloon = true;
             this.toolTip.Popup += new System.Windows.Forms.PopupEventHandler(this.ToolTip_Popup);
             // 
-            // FieldChooserForm
+            // CharacterChooserForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -262,11 +262,11 @@
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "FieldChooserForm";
+            this.Name = "CharacterChooserForm";
             this.ShowInTaskbar = false;
             this.Text = "Character Chooser";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FieldChooserForm_FormClosing);
-            this.Load += new System.EventHandler(this.FieldChooserForm_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CharacterChooserForm_FormClosing);
+            this.Load += new System.EventHandler(this.CharacterChooserForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
