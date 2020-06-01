@@ -19,17 +19,16 @@ along with CharacterChooser.  If not, see<https://www.gnu.org/licenses/>.
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
-#if DEBUG
 using System.IO;
-#endif
 
 using KeePass.Plugins;
 using KeePass.Resources;
 using KeePassLib;
 using KeePassLib.Security;
+
+using CharacterChooser.Properties;
 
 namespace CharacterChooser
 {
@@ -45,17 +44,8 @@ namespace CharacterChooser
             MenuItems = new List<ToolStripMenuItem>();
         }
 
-        /// <summary>
-        /// The <c>Initialize</c> method is called by KeePass when
-        /// you should initialize your plug in.
-        /// </summary>
-        /// <param name="host">Plug in host interface. Through this
-        /// interface you can access the KeePass main window, the
-        /// currently opened database, etc.</param>
-        /// <returns>You must return <c>true</c> in order to signal
-        /// successful initialization. If you return <c>false</c>,
-        /// KeePass unloads your plug in (without calling the
-        /// <c>Terminate</c> method of your plug in).</returns>
+
+
         public override bool Initialize(IPluginHost host)
         {
             if (host == null)
@@ -71,11 +61,11 @@ namespace CharacterChooser
         {
             if (MenuItems.Count > 0)
             {
+                // only enable if one entry is selected and it has a valid field
                 bool enable = false;
 
                 if (Host.MainWindow.GetSelectedEntriesCount() == 1)
                 {
-                    // only enable if one of the selected entry's relevant fields has some data
                     PwEntry entry = Host.MainWindow.GetSelectedEntry(true);
 
                     foreach (KeyValuePair<string, ProtectedString> kvp in entry.Strings)
@@ -96,9 +86,6 @@ namespace CharacterChooser
 
         private static bool FieldIsValid(KeyValuePair<string, ProtectedString> field)
         {
-            Debug.Assert(field.Value != null);
-            Debug.Assert(field.Key != null);
-
             if (field.Value.IsEmpty)
                 return false;
 
@@ -124,7 +111,7 @@ namespace CharacterChooser
             // In KeePass 2.41 this is called once and the single menu item added to an
             // entry's context menu. In KeePass 2.42.1 it is called twice, the menus are
             // added to the context menu and the new Entry drop down menu on the main window.
-            ToolStripMenuItem menuItem = new ToolStripMenuItem(Properties.Resources.menu_text, null, new ToolStripMenuItem());
+            ToolStripMenuItem menuItem = new ToolStripMenuItem(Resources.menu_text, null, new ToolStripMenuItem());
 
 
             menuItem.DropDownOpening += delegate (object sender, EventArgs e)
@@ -134,7 +121,6 @@ namespace CharacterChooser
                
                 // rebuild current...
                 List<ToolStripMenuItem> userFields = new List<ToolStripMenuItem>();
-                
                 PwEntry entry = Host.MainWindow.GetSelectedEntry(true);
 
                 foreach (KeyValuePair<string, ProtectedString> kvp in entry.Strings)
@@ -143,7 +129,7 @@ namespace CharacterChooser
                     {
                         ToolStripMenuItem subMenuItem = new ToolStripMenuItem
                         {
-                            Image = Properties.Resources.Menu_16x,
+                            Image = Resources.Menu_16x,
                             Tag = kvp.Value
                         };
 
@@ -164,9 +150,6 @@ namespace CharacterChooser
                         }
                     }
                 }
-
-                // the plugin's menu item shouldn't have been enabled
-                Debug.Assert((menuItem.DropDownItems.Count > 0) || (userFields.Count > 0));
 
                 if (userFields.Count > 0)
                     menuItem.DropDownItems.AddRange(userFields.ToArray());
@@ -191,8 +174,7 @@ namespace CharacterChooser
 
 
         /// <summary>
-        /// URL of a version information file. See
-        /// https://keepass.info/help/v2_dev/plg_index.html#upd
+        /// URL of a version information file
         /// </summary>
         public override string UpdateUrl
         {
@@ -210,34 +192,28 @@ namespace CharacterChooser
 
 
         /// <summary>
-        /// Get a handle to a 16x16 icon representing the plugin.
-        /// This icon is shown in the plugin management window of
-        /// KeePass for example.
+        /// a 16x16 icon representing the plugin
         /// </summary>
         public override Image SmallIcon
         {
-            get { return Properties.Resources.Plugin_16x; }
+            get { return Resources.Plugin_16x; }
         }
 
 
+
         /// <summary>
-        /// The <c>Terminate</c> function is called by KeePass when
-        /// you should free all resources, close open files/streams,
-        /// etc. It is also recommended that you remove all your
-        /// plugin menu items from the KeePass menu.
+        /// Clean up when this plugin is unloaded
         /// </summary>
         public override void Terminate()
         {
             Host.MainWindow.UIStateUpdated -= MainWindow_UIStateUpdated;
 
             foreach (ToolStripMenuItem menuItem in MenuItems)
-            {                
+            {
                 ToolStrip parent = menuItem.GetCurrentParent();
 
                 if (parent != null)
                     parent.Items.Remove(menuItem);
-
-                menuItem.Dispose();
             }
 
             MenuItems.Clear();
