@@ -57,10 +57,6 @@ namespace CharacterChooser
 
         internal CharacterChooserForm(IPluginHost host, ToolStripItemCollection fields, ToolStripItem startField) : this()
         {
-            Debug.Assert(host != null);
-            Debug.Assert(fields != null);
-            Debug.Assert(startField != null);
-
             Host = host;
 
             // the standard KeePass app icon
@@ -143,7 +139,7 @@ namespace CharacterChooser
         {
             Font passwordFont = KeePass.Program.Config.UI.PasswordFont.ToFont();
 
-            if (!Utils.FontEquals(passwordFont, charTextBox1.Font))
+            if (!Utils.EqivalentFont(passwordFont, charTextBox1.Font))
             {
                 int verticalOffset = 0;
 
@@ -262,8 +258,6 @@ namespace CharacterChooser
 
         private void IndexComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Debug.Assert(sender is ComboBox);
-
             bool entryProtected = false;
             bool characterSelected = false;
 
@@ -284,7 +278,7 @@ namespace CharacterChooser
         {
             ProtectedString pString = (ProtectedString)((ToolStripItem)fieldComboBox.SelectedItem).Tag;
 
-            Debug.Assert(selectedIndex <= pString.Length);
+            // the first combo box item is a dash indicating that there is no character selected
 
             if (selectedIndex < 1)
                 textBox.Text = string.Empty;
@@ -307,7 +301,10 @@ namespace CharacterChooser
         [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            if ((keyData == Keys.Escape) || (keyData == Keys.Enter))
+            if ((keyData == Keys.Escape) || 
+                (keyData == Keys.Enter) || 
+                (keyData == (Keys.Control | Keys.W)) ||
+                (keyData == (Keys.Alt | Keys.F4)))
             {
                 Close();
                 return true;
@@ -348,9 +345,7 @@ namespace CharacterChooser
 
         private void CharTextBox_TextChanged(object sender, EventArgs e)
         {
-            Debug.Assert(sender is TextBox);
-
-            TextBox tb = sender as TextBox;
+            TextBox tb = (TextBox)sender;
 
             if (string.IsNullOrEmpty(tb.Text))
                 tb.Enabled = false;
@@ -365,8 +360,7 @@ namespace CharacterChooser
 
         private void ToolTip_Popup(object sender, PopupEventArgs e)
         {
-            Debug.Assert(e.AssociatedControl is TextBox);
-            e.Cancel = (e.AssociatedControl as TextBox).UseSystemPasswordChar;
+            e.Cancel = ((TextBox)e.AssociatedControl).UseSystemPasswordChar;
         }
 
 
@@ -429,9 +423,6 @@ namespace CharacterChooser
 
             public CharacterSelectorRow(ComboBox comboBox, TextBox textBox)
             {
-                Debug.Assert(comboBox != null);
-                Debug.Assert(textBox != null);
-
                 IndexComboBox = comboBox;
                 CharTextBox = textBox;
             }
@@ -458,13 +449,19 @@ namespace CharacterChooser
 
                 return width;
             }
+            
 
-
-            public static bool FontEquals(Font left, Font right)
+            // Check fonts are the same. The Font.Equals() method 
+            // is too strict.
+            public static bool EqivalentFont(Font left, Font right)
             {
-                Debug.Assert(left != null);
-                Debug.Assert(right != null);
+                if (ReferenceEquals(left, right))
+                    return true;
+                
+                if ((left == null) || (right == null))
+                    return false;
 
+                // the font family should never be null
                 return (left.FontFamily.Equals(right.FontFamily)) &&
                         (left.SizeInPoints == right.SizeInPoints) &&
                         (left.Style == right.Style);
