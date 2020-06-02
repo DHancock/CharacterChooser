@@ -302,7 +302,6 @@ namespace CharacterChooser
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             if ((keyData == Keys.Escape) || 
-                (keyData == Keys.Enter) || 
                 (keyData == (Keys.Control | Keys.W)) ||
                 (keyData == (Keys.Alt | Keys.F4)))
             {
@@ -372,9 +371,9 @@ namespace CharacterChooser
         /// </summary>
         /// <param name="c"></param>
         /// <returns>category description</returns>
-        private string GetUnicodeCategoryDescription(char c)
+        private static string GetUnicodeCategoryDescription(char c)
         {
-            string s = string.Empty;
+            string s ;
             UnicodeCategory uc = Char.GetUnicodeCategory(c);
 
             switch (uc)
@@ -409,6 +408,7 @@ namespace CharacterChooser
                 case UnicodeCategory.ModifierSymbol: s = Resources.Sk; break;
                 case UnicodeCategory.OtherSymbol: s = Resources.So; break;
                 case UnicodeCategory.OtherNotAssigned: s = Resources.Cn; break;
+                default: s = string.Empty; break;
             }
 
             return s;
