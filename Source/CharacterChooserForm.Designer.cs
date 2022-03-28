@@ -70,8 +70,6 @@
             // indexComboBox1
             // 
             this.indexComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.indexComboBox1.Items.AddRange(new object[] {
-            "-"});
             this.indexComboBox1.Location = new System.Drawing.Point(183, 81);
             this.indexComboBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.indexComboBox1.Name = "indexComboBox1";
@@ -82,8 +80,6 @@
             // indexComboBox2
             // 
             this.indexComboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.indexComboBox2.Items.AddRange(new object[] {
-            "-"});
             this.indexComboBox2.Location = new System.Drawing.Point(183, 112);
             this.indexComboBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.indexComboBox2.Name = "indexComboBox2";
@@ -95,8 +91,6 @@
             // 
             this.indexComboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.indexComboBox3.FormattingEnabled = true;
-            this.indexComboBox3.Items.AddRange(new object[] {
-            "-"});
             this.indexComboBox3.Location = new System.Drawing.Point(183, 143);
             this.indexComboBox3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.indexComboBox3.Name = "indexComboBox3";
@@ -108,8 +102,6 @@
             // 
             this.indexComboBox4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.indexComboBox4.FormattingEnabled = true;
-            this.indexComboBox4.Items.AddRange(new object[] {
-            "-"});
             this.indexComboBox4.Location = new System.Drawing.Point(183, 174);
             this.indexComboBox4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.indexComboBox4.Name = "indexComboBox4";
