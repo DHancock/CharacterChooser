@@ -1,5 +1,5 @@
 ﻿/*
-Copyright 2019-2020 David Hancock
+Copyright 2019-2022 David Hancock
 
 This file is part of the CharacterChooser plugin for KeePass 2.
 
@@ -43,6 +43,7 @@ namespace CharacterChooser
 
         private readonly List<CharacterSelectorRow> characterSelectorRows = new List<CharacterSelectorRow>();
         private int previousFieldIndex = int.MinValue;
+        private ProtectedString fieldString;
 
         private const string cWidthKey = "CharacterChooser.DialogInfo.Width";
         private const string cXKey = "CharacterChooser.DialogInfo.X";
@@ -97,7 +98,6 @@ namespace CharacterChooser
         }
 
 
-
         private Point RestoreAndValidateSavedFormLocation()
         {
             Point location;
@@ -134,7 +134,6 @@ namespace CharacterChooser
         }
 
 
-
         private void AdjustLayoutForPasswordFont()
         {
             Font passwordFont = KeePass.Program.Config.UI.PasswordFont.ToFont();
@@ -148,7 +147,6 @@ namespace CharacterChooser
                     int oldTextBoxHight = row.CharTextBox.Height;
 
                     row.CharTextBox.Font = passwordFont;
-
                     row.CharTextBox.Top += verticalOffset;
                     row.IndexComboBox.Top += verticalOffset;
 
@@ -161,14 +159,12 @@ namespace CharacterChooser
         }
 
 
-
         private void CharacterChooserForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             Host.CustomConfig.SetLong(cWidthKey, this.Width);
             Host.CustomConfig.SetLong(cXKey, this.Left);
             Host.CustomConfig.SetLong(cYKey, this.Top);
         }
-
 
 
         // Hijack the hit test message result stopping the OS from showing the vertical 
@@ -201,100 +197,98 @@ namespace CharacterChooser
         }
 
 
-
         private void FieldComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // ensure that the index has changed
             if (fieldComboBox.SelectedIndex != previousFieldIndex)
             {
                 previousFieldIndex = fieldComboBox.SelectedIndex;
 
-                ProtectedString pString = (ProtectedString)((ToolStripItem)fieldComboBox.SelectedItem).Tag;
+                fieldString = (ProtectedString)((ToolStripItem)fieldComboBox.SelectedItem).Tag;
 
-                // adjust the number of combo box items
-                int requiredComboBoxItemCount = pString.Length + 1;
-
-                if (indexComboBox1.Items.Count != requiredComboBoxItemCount)
-                {
-                    if (indexComboBox1.Items.Count < requiredComboBoxItemCount)
-                    {
-                        for (int index = indexComboBox1.Items.Count; index < requiredComboBoxItemCount; index++)
-                        {
-                            string value = index.ToString(CultureInfo.CurrentCulture);
-
-                            foreach (CharacterSelectorRow row in characterSelectorRows)
-                                row.IndexComboBox.Items.Add(value);
-                        }
-                    }
-                    else
-                    {
-                        for (int index = indexComboBox1.Items.Count - 1; index >= requiredComboBoxItemCount; index--)
-                        {
-                            foreach (CharacterSelectorRow row in characterSelectorRows)
-                                row.IndexComboBox.Items.RemoveAt(index);
-                        }
-                    }
-                }
-
-                // reset the remaining ui state
                 protectButton.Enabled = false;
 
                 foreach (CharacterSelectorRow row in characterSelectorRows)
                 {
-                    if (row.IndexComboBox.SelectedIndex != 0)
-                    {
-                        row.IndexComboBox.SelectedIndexChanged -= IndexComboBox_SelectedIndexChanged;
-                        row.IndexComboBox.SelectedIndex = 0;
-                        row.IndexComboBox.SelectedIndexChanged += IndexComboBox_SelectedIndexChanged;
-                    }
-
-                    row.CharTextBox.Text = string.Empty;
-                    row.CharTextBox.UseSystemPasswordChar = pString.IsProtected;
+                    AdjustCharacterComboBoxItems(row.IndexComboBox, 0);
+                    LoadCharacterTextBox(row.IndexComboBox, row.CharTextBox);
+                    row.CharTextBox.UseSystemPasswordChar = fieldString.IsProtected;
                 }
             }
         }
 
 
-
         private void IndexComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            bool entryProtected = false;
             bool characterSelected = false;
+            bool adjustRemainingComboBoxes = false;
 
             foreach (CharacterSelectorRow row in characterSelectorRows)
             {
-                if (ReferenceEquals(row.IndexComboBox, sender))
-                    entryProtected = LoadCharacterTextBox(row.IndexComboBox.SelectedIndex, row.CharTextBox);
-
                 characterSelected |= row.IndexComboBox.SelectedIndex > 0;
+
+                if (adjustRemainingComboBoxes)
+                {
+                    int startIndex = 0;
+                    ComboBox indexComboBox = (ComboBox)sender;
+
+                    if (indexComboBox.SelectedIndex == 0)
+                    {
+                        if (indexComboBox.Items.Count > 1)
+                            startIndex = ((int)indexComboBox.Items[1]) - 1;
+                    }
+                    else
+                        startIndex = (int)indexComboBox.SelectedItem;
+
+                    AdjustCharacterComboBoxItems(row.IndexComboBox, startIndex);
+                    LoadCharacterTextBox(row.IndexComboBox, row.CharTextBox);
+                }
+                else if (ReferenceEquals(row.IndexComboBox, sender))
+                {
+                    adjustRemainingComboBoxes = true;
+                    LoadCharacterTextBox(row.IndexComboBox, row.CharTextBox);
+                }
             }
 
-            protectButton.Enabled = entryProtected && characterSelected;
+            protectButton.Enabled = fieldString.IsProtected && characterSelected;
         }
 
 
-
-        private bool LoadCharacterTextBox(int selectedIndex, TextBox textBox)
+        private void AdjustCharacterComboBoxItems(ComboBox indexComboBox, int startIndex)
         {
-            ProtectedString pString = (ProtectedString)((ToolStripItem)fieldComboBox.SelectedItem).Tag;
+            indexComboBox.SelectedIndexChanged -= IndexComboBox_SelectedIndexChanged;
+            indexComboBox.Items.Clear();
+            indexComboBox.Items.Add(Resources.character_combo_item_zero);
 
+            for (int index = startIndex + 1; index <= fieldString.Length; ++index)
+                indexComboBox.Items.Add(index);
+
+            indexComboBox.SelectedIndex = 0;
+            indexComboBox.Enabled = indexComboBox.Items.Count > 1;
+            indexComboBox.SelectedIndexChanged += IndexComboBox_SelectedIndexChanged;
+        }
+
+
+        private void LoadCharacterTextBox(ComboBox indexComboBox, TextBox textBox)
+        {
             // the first combo box item is a dash indicating that there is no character selected
-
-            if (selectedIndex < 1)
+            if (indexComboBox.SelectedIndex == 0)
                 textBox.Text = string.Empty;
             else
             {
-                char[] chars = pString.ReadChars();
+                char[] chars = null;
 
-                textBox.Text = chars[selectedIndex - 1].ToString(CultureInfo.CurrentCulture);
-
-                if (pString.IsProtected)
-                    MemUtil.ZeroArray(chars);
+                try
+                {
+                    chars = fieldString.ReadChars();
+                    textBox.Text = chars[((int)indexComboBox.SelectedItem) - 1].ToString(CultureInfo.CurrentCulture);
+                }
+                finally
+                {
+                    if (fieldString.IsProtected && (chars != null))
+                        MemUtil.ZeroArray(chars);
+                }
             }
-
-            return pString.IsProtected;
         }
-
 
 
         // avoids warnings CA2122 and CA2133
@@ -313,7 +307,6 @@ namespace CharacterChooser
         }
 
 
-
         private void CopyButton_Click(object sender, EventArgs e)
         {
             ProtectedString pString = (ProtectedString)((ToolStripItem)fieldComboBox.SelectedItem).Tag;
@@ -323,13 +316,11 @@ namespace CharacterChooser
         }
 
 
-
         private void ProtectButton_Click(object sender, EventArgs e)
         {
             foreach (CharacterSelectorRow row in characterSelectorRows)
                 row.CharTextBox.UseSystemPasswordChar = !row.CharTextBox.UseSystemPasswordChar;
         }
-
 
 
         private void ProtectButtonEnabledStateChanged(object sender, EventArgs e)
@@ -339,7 +330,6 @@ namespace CharacterChooser
             else
                 protectButton.Image = Resources.DotsDisabled;
         }
-
 
 
         private void CharTextBox_TextChanged(object sender, EventArgs e)
@@ -356,12 +346,10 @@ namespace CharacterChooser
         }
 
 
-
         private void ToolTip_Popup(object sender, PopupEventArgs e)
         {
             e.Cancel = ((TextBox)e.AssociatedControl).UseSystemPasswordChar;
         }
-
 
 
         /// <summary>
@@ -415,7 +403,6 @@ namespace CharacterChooser
         }
 
 
-
         private sealed class CharacterSelectorRow
         {
             public ComboBox IndexComboBox { get; private set; }
@@ -427,7 +414,6 @@ namespace CharacterChooser
                 CharTextBox = textBox;
             }
         }
-
 
 
         private static class Utils
