@@ -43,7 +43,7 @@ namespace CharacterChooser
 
         private readonly List<CharacterSelectorRow> characterSelectorRows = new List<CharacterSelectorRow>();
         private int previousFieldIndex = int.MinValue;
-        ProtectedString fieldString;
+        private ProtectedString fieldString;
 
         private const string cWidthKey = "CharacterChooser.DialogInfo.Width";
         private const string cXKey = "CharacterChooser.DialogInfo.X";
