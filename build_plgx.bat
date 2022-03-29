@@ -27,7 +27,7 @@ xcopy /y /s /i "%ProjectPath%Source" "%SrcDir%\Source"
 xcopy /y /s /i "%ProjectPath%Resources" "%SrcDir%\Resources"
 xcopy /y /s /i "%ProjectPath%Properties" "%SrcDir%\Properties"
  
-start /wait "" "%TargetPath%KeePass.exe" --plgx-create --plgx-prereq-net:4.0 --plgx-prereq-kp:2.41 "%SrcDir%"
+start /wait "" "%TargetPath%KeePass.exe" --plgx-create --plgx-prereq-net:4.8 --plgx-prereq-kp:2.41 "%SrcDir%"
 
 rd /s /q "%SrcDir%"
 
