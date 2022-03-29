@@ -309,9 +309,7 @@ namespace CharacterChooser
 
         private void CopyButton_Click(object sender, EventArgs e)
         {
-            ProtectedString pString = (ProtectedString)((ToolStripItem)fieldComboBox.SelectedItem).Tag;
-
-            if (ClipboardUtil.CopyAndMinimize(pString, false, this, null, null))
+            if (ClipboardUtil.CopyAndMinimize(fieldString, false, this, null, null))
                 Host.MainWindow.StartClipboardCountdown();
         }
 
