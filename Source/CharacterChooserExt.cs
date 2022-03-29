@@ -51,6 +51,11 @@ namespace CharacterChooser
             if (host == null)
                 return false;
 
+            ulong minVersion = KeePassLib.Utility.StrUtil.ParseVersion("2.41");
+
+            if (PwDefs.FileVersion64 < minVersion)
+                return false;
+
             Host = host;
             Host.MainWindow.UIStateUpdated += MainWindow_UIStateUpdated;
             return true;           
@@ -61,7 +66,7 @@ namespace CharacterChooser
         {
             if (MenuItems.Count > 0)
             {
-                // only enable if one entry is selected and it has a valid field
+                // only enable if a single entry is selected and it has a valid field
                 bool enable = false;
 
                 if (Host.MainWindow.GetSelectedEntriesCount() == 1)
@@ -116,10 +121,9 @@ namespace CharacterChooser
 
             menuItem.DropDownOpening += delegate (object sender, EventArgs e)
             {
-                // dump existing...
                 menuItem.DropDownItems.Clear();
                
-                // rebuild current...
+                // rebuild ensuring Password is first, followed by UserName
                 List<ToolStripMenuItem> userFields = new List<ToolStripMenuItem>();
                 PwEntry entry = Host.MainWindow.GetSelectedEntry(true);
 
