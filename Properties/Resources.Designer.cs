@@ -10,8 +10,8 @@
 
 namespace CharacterChooser.Properties {
     using System;
-
-
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -19,19 +19,19 @@ namespace CharacterChooser.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
-
+        
         private static global::System.Resources.ResourceManager resourceMan;
-
+        
         private static global::System.Globalization.CultureInfo resourceCulture;
-
+        
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Resources() {
         }
-
+        
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
@@ -45,7 +45,7 @@ namespace CharacterChooser.Properties {
                 return resourceMan;
             }
         }
-
+        
         /// <summary>
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
@@ -59,7 +59,7 @@ namespace CharacterChooser.Properties {
                 resourceCulture = value;
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to C0 or C1 control code.
         /// </summary>
@@ -68,7 +68,7 @@ namespace CharacterChooser.Properties {
                 return ResourceManager.GetString("Cc", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to format control character.
         /// </summary>
@@ -77,7 +77,7 @@ namespace CharacterChooser.Properties {
                 return ResourceManager.GetString("Cf", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to -.
         /// </summary>
@@ -86,7 +86,7 @@ namespace CharacterChooser.Properties {
                 return ResourceManager.GetString("character_combo_item_zero", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to unassigned character.
         /// </summary>
@@ -95,7 +95,7 @@ namespace CharacterChooser.Properties {
                 return ResourceManager.GetString("Cn", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to private use character.
         /// </summary>
@@ -104,7 +104,7 @@ namespace CharacterChooser.Properties {
                 return ResourceManager.GetString("Co", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
@@ -114,7 +114,7 @@ namespace CharacterChooser.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to suragate code point.
         /// </summary>
@@ -123,7 +123,7 @@ namespace CharacterChooser.Properties {
                 return ResourceManager.GetString("Cs", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
@@ -133,7 +133,7 @@ namespace CharacterChooser.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
@@ -143,7 +143,7 @@ namespace CharacterChooser.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to lowercase letter.
         /// </summary>
@@ -152,7 +152,7 @@ namespace CharacterChooser.Properties {
                 return ResourceManager.GetString("Ll", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to modifier letter.
         /// </summary>
@@ -161,7 +161,7 @@ namespace CharacterChooser.Properties {
                 return ResourceManager.GetString("Lm", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to other letters, including syllables and ideographs.
         /// </summary>
@@ -170,7 +170,7 @@ namespace CharacterChooser.Properties {
                 return ResourceManager.GetString("Lo", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to digraphic character, with first part uppercase.
         /// </summary>
@@ -179,7 +179,7 @@ namespace CharacterChooser.Properties {
                 return ResourceManager.GetString("Lt", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to uppercase letter.
         /// </summary>
@@ -188,7 +188,7 @@ namespace CharacterChooser.Properties {
                 return ResourceManager.GetString("Lu", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to spacing combining mark.
         /// </summary>
@@ -197,7 +197,7 @@ namespace CharacterChooser.Properties {
                 return ResourceManager.GetString("Mc", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to enclosing combining mark.
         /// </summary>
@@ -206,7 +206,7 @@ namespace CharacterChooser.Properties {
                 return ResourceManager.GetString("Me", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
@@ -216,7 +216,7 @@ namespace CharacterChooser.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Character Chooser.
         /// </summary>
@@ -225,7 +225,7 @@ namespace CharacterChooser.Properties {
                 return ResourceManager.GetString("menu_text", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to nonspacing combining mark.
         /// </summary>
@@ -234,7 +234,7 @@ namespace CharacterChooser.Properties {
                 return ResourceManager.GetString("Mn", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to decimal digit.
         /// </summary>
@@ -243,7 +243,7 @@ namespace CharacterChooser.Properties {
                 return ResourceManager.GetString("Nd", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to letter like numeric character.
         /// </summary>
@@ -252,7 +252,7 @@ namespace CharacterChooser.Properties {
                 return ResourceManager.GetString("Nl", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to numeric character.
         /// </summary>
@@ -261,7 +261,7 @@ namespace CharacterChooser.Properties {
                 return ResourceManager.GetString("No", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to punctuation mark.
         /// </summary>
@@ -270,7 +270,7 @@ namespace CharacterChooser.Properties {
                 return ResourceManager.GetString("Pc", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to dash or hyphen punctuation mark.
         /// </summary>
@@ -279,7 +279,7 @@ namespace CharacterChooser.Properties {
                 return ResourceManager.GetString("Pd", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to closing punctuation mark.
         /// </summary>
@@ -288,7 +288,7 @@ namespace CharacterChooser.Properties {
                 return ResourceManager.GetString("Pe", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to final quotation mark.
         /// </summary>
@@ -297,7 +297,7 @@ namespace CharacterChooser.Properties {
                 return ResourceManager.GetString("Pf", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to initial quotation mark.
         /// </summary>
@@ -306,7 +306,7 @@ namespace CharacterChooser.Properties {
                 return ResourceManager.GetString("Pi", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
@@ -316,7 +316,7 @@ namespace CharacterChooser.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to punctuation mark.
         /// </summary>
@@ -325,7 +325,7 @@ namespace CharacterChooser.Properties {
                 return ResourceManager.GetString("Po", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to opening punctuation mark.
         /// </summary>
@@ -334,7 +334,7 @@ namespace CharacterChooser.Properties {
                 return ResourceManager.GetString("Ps", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to currency symbol.
         /// </summary>
@@ -343,7 +343,7 @@ namespace CharacterChooser.Properties {
                 return ResourceManager.GetString("Sc", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to non-letterlike modifier symbol.
         /// </summary>
@@ -352,7 +352,7 @@ namespace CharacterChooser.Properties {
                 return ResourceManager.GetString("Sk", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to mathematical symbol.
         /// </summary>
@@ -361,7 +361,7 @@ namespace CharacterChooser.Properties {
                 return ResourceManager.GetString("Sm", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to symbol.
         /// </summary>
@@ -370,7 +370,7 @@ namespace CharacterChooser.Properties {
                 return ResourceManager.GetString("So", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to line seperator.
         /// </summary>
@@ -379,7 +379,7 @@ namespace CharacterChooser.Properties {
                 return ResourceManager.GetString("Zl", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to paragraph seperator.
         /// </summary>
@@ -388,7 +388,7 @@ namespace CharacterChooser.Properties {
                 return ResourceManager.GetString("Zp", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to space character.
         /// </summary>
