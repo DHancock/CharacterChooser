@@ -42,7 +42,6 @@ namespace CharacterChooser
         private IPluginHost Host { get; set; }
 
         private readonly List<CharacterSelectorRow> characterSelectorRows = new List<CharacterSelectorRow>();
-        private int previousFieldIndex = int.MinValue;
         private ProtectedString fieldString;
 
         private const string cWidthKey = "CharacterChooser.DialogInfo.Width";
@@ -199,17 +198,17 @@ namespace CharacterChooser
 
         private void FieldComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (fieldComboBox.SelectedIndex != previousFieldIndex)
-            {
-                previousFieldIndex = fieldComboBox.SelectedIndex;
+            object newString = ((ToolStripItem)fieldComboBox.SelectedItem).Tag;
 
-                fieldString = (ProtectedString)((ToolStripItem)fieldComboBox.SelectedItem).Tag;
+            if (!ReferenceEquals(fieldString, newString))
+            {
+                fieldString = (ProtectedString)newString;
 
                 protectButton.Enabled = false;
 
                 foreach (CharacterSelectorRow row in characterSelectorRows)
                 {
-                    AdjustCharacterComboBoxItems(row.IndexComboBox, 0);
+                    AdjustCharacterComboBoxItems(row.IndexComboBox, startIndex: 0);
                     LoadCharacterTextBox(row.IndexComboBox, row.CharTextBox);
                     row.CharTextBox.UseSystemPasswordChar = fieldString.IsProtected;
                 }
@@ -291,8 +290,6 @@ namespace CharacterChooser
         }
 
 
-        // avoids warnings CA2122 and CA2133
-        [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             if ((keyData == Keys.Escape) || 
