@@ -283,8 +283,7 @@ namespace CharacterChooser
                 }
                 finally
                 {
-                    if (fieldString.IsProtected && (chars != null))
-                        MemUtil.ZeroArray(chars);
+                    MemUtil.ZeroArray(chars);
                 }
             }
         }
