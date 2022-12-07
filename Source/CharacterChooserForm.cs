@@ -21,7 +21,6 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms; 
 using System.Diagnostics;
-using System.Security.Permissions;
 using System.Globalization;
 using System.Drawing;
 using System.Windows.Forms.VisualStyles;
@@ -43,6 +42,7 @@ namespace CharacterChooser
 
         private readonly List<CharacterSelectorRow> characterSelectorRows = new List<CharacterSelectorRow>();
         private ProtectedString fieldString;
+        private readonly Color uppercaseHiliteColor = Color.Red;
 
         private const string cWidthKey = "CharacterChooser.DialogInfo.Width";
         private const string cXKey = "CharacterChooser.DialogInfo.X";
@@ -313,9 +313,23 @@ namespace CharacterChooser
         private void ProtectButton_Click(object sender, EventArgs e)
         {
             foreach (CharacterSelectorRow row in characterSelectorRows)
-                row.CharTextBox.UseSystemPasswordChar = !row.CharTextBox.UseSystemPasswordChar;
+            {
+                TextBox tb = row.CharTextBox;
+
+                tb.UseSystemPasswordChar = !tb.UseSystemPasswordChar;
+
+                if (tb.UseSystemPasswordChar)
+                    SetForeColor(tb, Color.Black);
+                else if ((tb.Text.Length > 0) && (Char.GetUnicodeCategory(tb.Text[0]) == UnicodeCategory.UppercaseLetter))
+                    SetForeColor(tb, uppercaseHiliteColor);
+            }
         }
 
+        private static void SetForeColor(TextBox tb, Color color)
+        {
+            if (tb.ForeColor != color)
+                tb.ForeColor = color;
+        }
 
         private void ProtectButtonEnabledStateChanged(object sender, EventArgs e)
         {
@@ -336,6 +350,12 @@ namespace CharacterChooser
             {
                 tb.Enabled = true;
                 toolTip.SetToolTip(tb, GetUnicodeCategoryDescription(tb.Text[0]));
+                toolTip.AutomaticDelay = 125;
+
+                if (!tb.UseSystemPasswordChar && (Char.GetUnicodeCategory(tb.Text[0]) == UnicodeCategory.UppercaseLetter))
+                    SetForeColor(tb, uppercaseHiliteColor); 
+                else
+                    SetForeColor(tb, Color.Black);
             }
         }
 
